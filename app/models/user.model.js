@@ -12,6 +12,7 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  providerId: String,
   salt: String,
   hash: String,
 }, {

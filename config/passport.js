@@ -114,13 +114,54 @@ module.exports = function(passport) {
   passport.use(new FacebookStrategy({
       clientID: process.env.FB_APP_ID,
       clientSecret: process.env.FB_APP_SECRET,
-      callbackURL: process.env.APP_URL,
-      profileFields: ['email', 'first_name', 'last_name'] //only grab needed fiels from facebook
+      callbackURL: process.env.FB_CALLBACK_URL,
+      profileFields: ['id', 'email', 'first_name', 'last_name'] //only grab needed fiels from facebook
     },
 
-    function facebookVerifyCallback(accessToken, refreshToken, profile, done) {
+    function facebookAuth(token, refreshToken, profile, done) {
+      //start by searching for user
+      console.log('Searching for FB user');
+      User.findOne({
+        'providerId': profile.id //search using unique providerId
+      }, function(err, user) {
+        //error from seraching the DB
+        if (err) {
+          return done(err);
+        }
 
+        //user already exists, log them in
+        if (user) {
+          console.log('Found FB User');
+          return done(null, user, {
+            status: 200,
+            message: 'User logged in.'
+          });
+        }
+
+        //user did not exist and needs to be created
+        else {
+          console.log('Creating new FB user.');
+          var newUser = new User();
+          newUser.name = profile.name.givenName + ' ' + profile.name.failyName;
+          newUser.email = profile.emails[0].value;
+          newUser.providerId = profile.id;
+          newUser.save(function(err) {
+            //error in saving
+            if (err) {
+              throw err;
+            }
+
+            //new user added
+            return done(null, newUser, {
+              status: 200,
+              message: 'User registered.'
+            });
+
+          });
+        }
+      });
     }
+
   ));
 
   //**** TWITTER ****//

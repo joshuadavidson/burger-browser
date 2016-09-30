@@ -7,6 +7,54 @@ body {
   color: rgb(255, 255, 255);
 }
 
+/* Custom facebook button */
+.btn-facebook {
+  color: rgb(255, 255, 255);
+  background-color: rgb(59, 89, 152);
+  border-color: rgb(59, 89, 152);
+}
+.btn-facebook:hover,
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook.active,
+.open .dropdown-toggle.btn-facebook {
+  color: rgb(230, 230, 230);
+  background-color: rgb(59, 89, 152);
+  border-color: rgb(59, 89, 152);
+}
+
+/* Custom google button */
+.btn-google {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255);
+}
+.btn-google:hover,
+.btn-google:focus,
+.btn-google:active,
+.btn-google.active,
+.open .dropdown-toggle.btn-google {
+  color: rgb(70, 70, 70);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255);
+}
+
+/* Custom twitter button */
+.btn-twitter {
+  color: rgb(255, 255, 255);
+  background-color: rgb(29, 161, 243);
+  border-color: rgb(29, 161, 243);
+}
+.btn-twitter:hover,
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter.active,
+.open .dropdown-toggle.btn-twitter {
+  color: rgb(230, 230, 230);
+  background-color: rgb(29, 161, 243);
+  border-color: rgb(29, 161, 243);
+}
+
 /* Link color customization */
 .row a {
   text-decoration: underline;

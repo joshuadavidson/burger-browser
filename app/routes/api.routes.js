@@ -7,5 +7,6 @@ router.use('/login', require('../controllers/login.controller'));
 router.use('/logout', require('../controllers/logout.controller'));
 router.use('/isloggedin', require('../controllers/isloggedin.controller'));
 router.use('/profile', require('../controllers/profile.controller'));
+router.use('/auth', require('../controllers/auth.controller'));
 
 module.exports = router;
