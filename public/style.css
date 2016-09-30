@@ -1,5 +1,5 @@
 body {
-  background: url(./img/grill.png) no-repeat center center fixed;
+  background: url(./img/grill.png);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
