@@ -15,26 +15,25 @@
       <div class="row">
         <div class="col-lg-6 col-lg-offset-3 text-center">
           <p ng-show="!$ctrl.showEmailForm">
-            <button class="btn btn-facebook btn-block" type="button" name="button">
-              <i class="fa fa-facebook"></i>  Sign in with Facebook
-            </button>
+            <a class="btn btn-facebook btn-block" href="/api/auth/facebook" target="_self">
+              <i class="fa fa-facebook"></i>  Register using Facebook
+            </a>
           </p>
 
           <p ng-show="!$ctrl.showEmailForm">
-            <button class="btn btn-twitter btn-block" type="button" name="button">
-              <i class="fa fa-twitter"></i>  Sign in with Twitter
-            </button>
+            <a class="btn btn-twitter btn-block" href="/api/auth/twitter" target="_self">
+              <i class="fa fa-twitter"></i>  Register using Twitter
+            </a>
           </p>
 
           <p ng-show="!$ctrl.showEmailForm">
-            <button class="btn btn-google btn-block" type="button" name="button">
-              <img src="../img/g-logo.png" width="18px" alt="" />
-              Sign in with Google
-            </button>
+            <a class="btn btn-google btn-block" href="/api/auth/google" target="_self">
+              <img src="../img/g-logo.png" width="18px" alt="" />  Register using Google
+            </a>
           </p>
 
           <p>
-            <button ng-click="$ctrl.emailButtonClick()"  onclick="this.blur();" class="btn btn-default btn-block" type="button" name="button">
+            <button ng-click="$ctrl.emailButtonClick()"  onclick="this.blur();" class="btn btn-default btn-block" type="button" name="register-with-email">
               <span ng-if="$ctrl.showEmailForm">Register Using Social Media</span>
               <span ng-if="!$ctrl.showEmailForm">
                 <i class="fa fa-envelope"></i>  Register Using Email
@@ -42,15 +41,16 @@
             </button>
           </p>
 
-          <p class="bg-danger" ng-show="$ctrl.registerError">
-            {{$ctrl.registerError}}
-          </p>
         </div>
       </div>
 
-      <!-- Email registration form -->
+      <!-- Error display -->
+      <p class="bg-danger" ng-show="$ctrl.registerError">
+        {{$ctrl.registerError}}
+      </p>
 
-      <form ng-show="$ctrl.showEmailForm" novalidate ng-submit="$ctrl.onSubmit()" class="css-form text-left">
+      <!-- Email registration form -->
+      <form ng-show="$ctrl.showEmailForm" novalidate ng-submit="$ctrl.register('local')" class="css-form text-left">
 
         <div class="form-group">
           <label for="name" class="control-label">Name</label>

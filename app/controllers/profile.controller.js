@@ -4,13 +4,11 @@ const router = express.Router();
 function ensureAuthenticated(req, res, next) {
   //check if request is authenticated
   if (req.isAuthenticated()) {
-    console.log('Authenticated');
     return next(null);
   }
 
   //request is not authenticated return 401
   else {
-    console.log('Not Authenticated');
     res.status(401);
   }
 }

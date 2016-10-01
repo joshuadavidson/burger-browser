@@ -20,14 +20,14 @@ angular
     return $http.get('/api/profile');
   };
 
-  //register a new user
+  //register a new local user
   Authentication.register = function(credentials) {
     return $http.post('/api/register', credentials);
   };
 
-  //log in an existing user
+  //log in an existing local user
   Authentication.login = function(credentials) {
-    return $http.post('/api/login', credentials);
+    return $http.get('/api/login');
   };
 
   return Authentication;

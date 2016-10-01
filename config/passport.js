@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
-const GoogleStrategy = require('passport-google-oauth').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../app/models/user.model');
 
 module.exports = function(passport) {
@@ -16,8 +16,7 @@ module.exports = function(passport) {
     });
   });
 
-  //**** LOCAL ****//
-  //Register a new local user
+  //**** LOCAL REGSITER ****//
   passport.use('local-register', new LocalStrategy({
       usernameField: 'email', //override passport default username field
       passReqToCallback: true,
@@ -68,7 +67,7 @@ module.exports = function(passport) {
     }
   ));
 
-  //login a local user
+  //**** LOCAL LOGIN ****//
   passport.use('local-login', new LocalStrategy({
       usernameField: 'email', //override passport default username field
     },
@@ -110,17 +109,16 @@ module.exports = function(passport) {
   ));
 
   //**** FACEBOOK ****//
-
   passport.use(new FacebookStrategy({
       clientID: process.env.FB_APP_ID,
       clientSecret: process.env.FB_APP_SECRET,
       callbackURL: process.env.FB_CALLBACK_URL,
-      profileFields: ['id', 'email', 'first_name', 'last_name'] //only grab needed fiels from facebook
+      profileFields: ['id', 'email', 'first_name', 'last_name'] //only grab needed fields from facebook
     },
 
     function facebookAuth(token, refreshToken, profile, done) {
       //start by searching for user
-      console.log('Searching for FB user');
+      console.log('Searching for Facebook user.');
       User.findOne({
         'providerId': profile.id //search using unique providerId
       }, function(err, user) {
@@ -128,35 +126,34 @@ module.exports = function(passport) {
         if (err) {
           return done(err);
         }
-
         //user already exists, log them in
         if (user) {
-          console.log('Found FB User');
+          console.log('Found Facebook user.');
           return done(null, user, {
             status: 200,
-            message: 'User logged in.'
+            message: 'User already exists.'
           });
         }
-
         //user did not exist and needs to be created
         else {
-          console.log('Creating new FB user.');
+          console.log('Creating new Facebook user.');
+          console.log(profile);
           var newUser = new User();
-          newUser.name = profile.name.givenName + ' ' + profile.name.failyName;
+          newUser.name = profile.name.givenName + ' ' + profile.name.familyName;
           newUser.email = profile.emails[0].value;
+          newUser.provider = profile.provider;
           newUser.providerId = profile.id;
           newUser.save(function(err) {
             //error in saving
             if (err) {
               throw err;
             }
-
             //new user added
+            console.log('New Facebook user created.');
             return done(null, newUser, {
               status: 200,
               message: 'User registered.'
             });
-
           });
         }
       });
@@ -165,7 +162,100 @@ module.exports = function(passport) {
   ));
 
   //**** TWITTER ****//
+  passport.use(new TwitterStrategy({
+      consumerKey: process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+      callbackURL: process.env.TWITTER_CALLBACK_URL
+    },
+    function(token, tokenSecret, profile, done) {
+      //start by searching for user
+      console.log('Searching for Twitter user.');
+      User.findOne({
+        'providerId': profile.id //search using unique providerId
+      }, function(err, user) {
+        //error from seraching the DB
+        if (err) {
+          return done(err);
+        }
+        //user already exists, log them in
+        if (user) {
+          console.log('Found Twitter user.');
+          return done(null, user, {
+            status: 200,
+            message: 'User already exists.'
+          });
+        }
+        //user did not exist and needs to be created
+        else {
+          console.log('Creating new Twitter user.');
+          var newUser = new User();
+          newUser.name = profile.displayName;
+          newUser.provider = profile.provider;
+          newUser.providerId = profile.id;
+          newUser.save(function(err) {
+            //error in saving
+            if (err) {
+              throw err;
+            }
+            //new user added
+            console.log('New Twitter user created.');
+            return done(null, newUser, {
+              status: 200,
+              message: 'User registered.'
+            });
+          });
+        }
+      });
+    }
+  ));
 
   //**** GOOGLE ****//
+  passport.use(new GoogleStrategy({
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL
+    },
+    function(token, tokenSecret, profile, done) {
+      //start by searching for user
+      console.log('Searching for Google user.');
+      User.findOne({
+        'providerId': profile.id //search using unique providerId
+      }, function(err, user) {
+        //error from seraching the DB
+        if (err) {
+          return done(err);
+        }
+        //user already exists, log them in
+        if (user) {
+          console.log('Found Google user.');
+          return done(null, user, {
+            status: 200,
+            message: 'User already exists.'
+          });
+        }
+        //user did not exist and needs to be created
+        else {
+          console.log('Creating new Google user.');
+          var newUser = new User();
+          newUser.name = profile.name.givenName + ' ' + profile.name.familyName;
+          newUser.email = profile.emails[0].value;
+          newUser.provider = profile.provider;
+          newUser.providerId = profile.id;
+          newUser.save(function(err) {
+            //error in saving
+            if (err) {
+              throw err;
+            }
+            //new user added
+            console.log('New Google user created.');
+            return done(null, newUser, {
+              status: 200,
+              message: 'User registered.'
+            });
+          });
+        }
+      });
+    }
+  ));
 
 };

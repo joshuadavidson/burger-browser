@@ -16,6 +16,11 @@ angular
       template: '<app-home></app-home>'
     })
 
+    //deal with funky Facebook redirect URL addition _=_
+    .when('/_=_', {
+      redirectTo: '/'
+    })
+
     .when('/register', {
       template: '<app-register></app-register>'
     })

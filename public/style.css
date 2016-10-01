@@ -10,6 +10,9 @@ body {
   background-size: cover;
   color: rgb(255, 255, 255);
 }
+a.btn {
+  text-decoration: none !important;
+}
 
 /* Custom facebook button */
 .btn-facebook {
@@ -17,30 +20,15 @@ body {
   background-color: rgb(59, 89, 152);
   border-color: rgb(59, 89, 152);
 }
+a.btn-facebook,
 .btn-facebook:hover,
 .btn-facebook:focus,
 .btn-facebook:active,
 .btn-facebook.active,
 .open .dropdown-toggle.btn-facebook {
-  color: rgb(230, 230, 230);
+  color: rgb(255, 255, 255) !important;
   background-color: rgb(59, 89, 152);
   border-color: rgb(59, 89, 152);
-}
-
-/* Custom google button */
-.btn-google {
-  color: rgb(0, 0, 0);
-  background-color: rgb(255, 255, 255);
-  border-color: rgb(255, 255, 255);
-}
-.btn-google:hover,
-.btn-google:focus,
-.btn-google:active,
-.btn-google.active,
-.open .dropdown-toggle.btn-google {
-  color: rgb(70, 70, 70);
-  background-color: rgb(255, 255, 255);
-  border-color: rgb(255, 255, 255);
 }
 
 /* Custom twitter button */
@@ -54,9 +42,27 @@ body {
 .btn-twitter:active,
 .btn-twitter.active,
 .open .dropdown-toggle.btn-twitter {
-  color: rgb(230, 230, 230);
+  color: rgb(255, 255, 255) !important;
   background-color: rgb(29, 161, 243);
   border-color: rgb(29, 161, 243);
+}
+
+/* Custom google button */
+a.btn-google {
+  color: rgb(0, 0, 0) !important;
+}
+.btn-google {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255);
+}
+.btn-google:hover,
+.btn-google:focus,
+.btn-google:active,
+.btn-google.active,
+.open .dropdown-toggle.btn-google {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255);
 }
 
 /* Link color customization */

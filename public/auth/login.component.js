@@ -16,9 +16,16 @@ angular
       password: null
     };
 
-    self.loginError = null;
+    //variable to toggle email form
+    self.showEmailForm = false;
 
-    self.onSubmit = function() {
+    self.emailButtonClick = function() {
+      self.showEmailForm = !self.showEmailForm; //toggle email form
+      self.loginError = null; //clear any errors
+    };
+
+    self.login = function() {
+      self.loginError = null;
       //if email entered is invalid
       if(!self.credentials.email && self.credentials.password){
         self.loginError = 'Please provide a valid email.';
