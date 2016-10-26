@@ -9,7 +9,7 @@ function ensureAuthenticated(req, res, next) {
 
   //request is not authenticated return 401
   else {
-    res.status(401);
+    res.sendStatus(204);
   }
 }
 

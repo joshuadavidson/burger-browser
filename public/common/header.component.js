@@ -12,24 +12,14 @@ angular
     //isCollapsed toggles when the user selects a link from the navbar menu
     self.isCollapsed = true;
 
-    //setup an object for the profile data
-    self.user = {};
-
-    //check login status
-    self.isLoggedIn = false;
-    Authentication.isLoggedIn()
-      .then(function(response) {
-        self.isLoggedIn = response.data.status;
-
-        //if logged in get the user data
-        if (self.isLoggedIn) {
-          Authentication.getUser()
-            //store the users data
-            .then(function(response) {
-              self.user = response.data;
-            });
-        }
-      });
+    //check for logged in state
+    Authentication.getUser()
+    .then(function(response){
+      self.user = response.data;
+    })
+    .catch(function(err){
+      self.user = null;
+    });
 
     self.logout = function() {
       Authentication.logout();

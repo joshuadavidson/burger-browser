@@ -27,7 +27,7 @@ angular
 
   //log in an existing local user
   Authentication.login = function(credentials) {
-    return $http.get('/api/login');
+    return $http.post('/api/login', credentials);
   };
 
   return Authentication;

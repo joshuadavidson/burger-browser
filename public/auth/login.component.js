@@ -27,6 +27,7 @@ angular
     self.login = function() {
       self.loginError = null;
       //if email entered is invalid
+      console.log('made it to login function');
       if(!self.credentials.email && self.credentials.password){
         self.loginError = 'Please provide a valid email.';
       }
@@ -43,12 +44,18 @@ angular
 
       //if both email and password are provided and valid
       if (self.credentials.email && self.credentials.password) {
+        console.log('made it to auth function');
+        console.log('sending credentials:')
+        console.log(self.credentials);
         Authentication.login(self.credentials)
-        .then(function() {
+        .then(function(response) {
+          console.log('made it to response');
+          console.log(response);
           $location.path('/');
         })
 
         .catch(function(err) {
+          console.log('error occured during auth.');
           self.loginError = err.data.message;
         });
       }

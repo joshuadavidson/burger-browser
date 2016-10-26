@@ -19,7 +19,7 @@ module.exports = function(passport) {
   //**** LOCAL REGSITER ****//
   passport.use('local-register', new LocalStrategy({
       usernameField: 'email', //override passport default username field
-      passReqToCallback: true,
+      passReqToCallback: true
     },
 
     function localRegisterAuth(req, email, password, done) {

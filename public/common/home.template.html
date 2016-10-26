@@ -8,12 +8,30 @@
       <h1>Burger Browser</h1>
 
       <h4>Browse Burger Joints Near You</h4>
+
+      <!-- Error display -->
+      <p class="bg-danger" ng-show="$ctrl.locationError">
+        {{$ctrl.locationError}}
+      </p>
+
+      <form novalidate ng-submit="" class="css-form form-horizontal text-left">
+        <div class="form-group">
+          <input type="text" ng-model="$ctrl.inputLocation" class="form-control input-lg" placeholder="Location" autofocus="autofocus" required />
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-default">Find Burgers</button>
+        </div>
+      </form>
+
+
       <p>
-        Register to check in at your favorite burger joint.
+        <h6><a href="/register">Register</a> to check in at your favorite burger joint.</h6>
       </p>
 
       <div class="list-group text-center">
-
+        <div class="list-group-item clearfix">
+          Test
+        </div>
       </div>
 
     </div>
