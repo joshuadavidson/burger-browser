@@ -10,8 +10,12 @@ angular
   controller: ['UserLocation', function HomeController(UserLocation) {
     var self = this;
 
-    console.log(UserLocation.getCoords);
+    UserLocation.getLocation()
+    .then(function(location){
+      console.log(location);
+    });
 
+/*
     UserLocation.getCoords.then(function(coords){
       self.inputLocation = coords.lat + ', '+ coords.lon;
     })
@@ -22,6 +26,6 @@ angular
         longitude: 9.9937
       };
     });
-
+*/
   }]
 });

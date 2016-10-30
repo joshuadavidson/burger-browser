@@ -86,7 +86,7 @@ a.btn-google {
 .list-group-item {
   color: black;
   background-color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255);
 }
 
 /* Navbar color customization */
