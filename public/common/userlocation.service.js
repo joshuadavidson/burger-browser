@@ -6,14 +6,6 @@ angular
 .factory('UserLocation', ['$window', '$http', function($window, $http) {
   var UserLocation = {};
 
-  UserLocation.geolocationEnabled = function() {
-    if ($window.navigator.geolocation) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   UserLocation.getCoords = function() {
 
     return new Promise(function(resolve, reject) {
@@ -45,37 +37,58 @@ angular
     });
   };
 
-  UserLocation.extractCityStateCountry = function(json) {
+  UserLocation.parseAddress = function(geocodeData) {
     var location = {};
+    var addressData = geocodeData[1].data.results[0]; //location of address data within geocode object
 
-    //find the city, state, and country from google geocode results
-    for (var i = 0; i < json.results[0].address_components.length; i++) {
-      for (var j = 0; j < json.results[0].address_components[i].types.length; j++) {
-        var currType = json.results[0].address_components[i].types[j];
+    //store latitute and longitude data
+    location.lat = geocodeData[0].lat;
+    location.lon = geocodeData[0].lon;
+
+    //store the raw formatted address from google
+    location.formattedAddress = addressData.formatted_address;
+
+    //parse geocode results to location object
+    for (var i = 0; i < addressData.address_components.length; i++) {
+      var component = addressData.address_components[i].short_name;
+
+      for (var j = 0; j < addressData.address_components[i].types.length; j++) {
+        var currType = addressData.address_components[i].types[j];
         switch (currType) {
-          case "country":
-            location.country = json.results[0].address_components[i].short_name;
+          case "street_number":
+            location.house = component;
             break;
-          case "administrative_area_level_1":
-            location.state = json.results[0].address_components[i].short_name;
+          case "route":
+            location.street = component;
+            break;
+          case "neighborhood":
+            location.neighborhood = component;
             break;
           case "locality":
-            location.city = json.results[0].address_components[i].short_name;
+            location.city = component;
+            break;
+          case "administrative_area_level_2":
+            location.county = component;
+            break;
+          case "administrative_area_level_1":
+            location.state = component;
+            break;
+          case "postal_code":
+            location.postalCode = component;
+            break;
+          case "country":
+            location.country = component;
             break;
         }
       }
     }
 
-    //Assemble the location text with tabs, remove empty values, the replace tabs with ', '
-    location.locationText = location.city + "\u0009" + location.state + "\u0009" + location.country;
-    location.locationText = userData.location.locationText.trim().replace(/\t/g, ", ");
-
-    //return the human readable location
+    //return the assembled location object
     return location;
   };
 
   UserLocation.getGeoCodeData = function(coords) {
-    return $http.get('htps://maps.googleapis.com/maps/api/geocode/json', {
+    return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         latlng: coords.lat + ',' + coords.lon,
         key: 'AIzaSyBI_S0PtZF_qjsPhbqql5HlUoTj0pM5RYQ'
@@ -85,7 +98,7 @@ angular
 
   UserLocation.getLocation = function() {
     var self = this;
-    
+
     return new Promise(function(resolve, reject) {
       self.getCoords()
 
@@ -93,9 +106,8 @@ angular
         return Promise.all([coords, self.getGeoCodeData(coords)]);
       })
 
-      .then(function(results) {
-        //return the result of the extraction of city and state from the geocode data
-        resolve(self.extractCityStateCountry(results[1].data));
+      .then(function(geocodeData) {
+        resolve(self.parseAddress(geocodeData));
       })
 
       .catch(function(error) {
