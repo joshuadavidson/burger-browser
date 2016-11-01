@@ -35,7 +35,7 @@ angular
     self.getAccessToken()
 
     .then(function(token) {
-      return $http.get('https://api.yelp.com/v3/business/search', {
+      return $http.get('https://api.yelp.com/v3/businesses/search', {
         data: {
           term: 'burgers',
           latitude: lat,
