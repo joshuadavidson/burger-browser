@@ -39,23 +39,4 @@ router.get('/google/callback',
   })
 );
 
-//***** YELP *****//
-router.get('/yelptoken', function (req, res, next){
-  request.post({
-    method: 'POST',
-    uri: 'https://api.yelp.com/oauth2/token',
-    json: true,
-    form: {
-      'client_id': process.env.YELP_APP_ID,
-      'client_secret': process.env.YELP_APP_SECRET
-    }
-  },
-  function yelpCallback(error, response, body){
-    console.log(body);
-    res.status(200).json({
-      yelptoken: body.access_token
-    });
-  });
-});
-
 module.exports = router;

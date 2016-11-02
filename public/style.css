@@ -73,7 +73,15 @@ a.btn-google {
   color: inherit;
 }
 .row a:hover, .row a:active {
-  color: rgb(230, 230, 230);
+  color: inherit;
+}
+.plain-link {
+  text-decoration:none !important;
+}
+
+/* Yelp Image */
+.yelp-image{
+  vertical-align:sub;
 }
 
 /* Contextual Background color customization */
@@ -86,7 +94,6 @@ a.btn-google {
 .list-group-item {
   color: black;
   background-color: rgb(255, 255, 255);
-  background-color: rgba(255, 255, 255);
 }
 
 /* Navbar color customization */

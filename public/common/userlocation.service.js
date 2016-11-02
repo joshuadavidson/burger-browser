@@ -17,6 +17,7 @@ angular
             lon: position.coords.longitude
           });
         }, function(error) {
+          error.occuredAt = "getGeolocation";
           reject(error);
         });
       }
@@ -31,6 +32,7 @@ angular
             });
           })
           .catch(function(error) {
+            error.occuredAt = "getIP"
             reject(error);
           });
       }
