@@ -6,7 +6,31 @@ angular
     'login',
     'pageNotFound'
   ])
+/*
+  .config(['$locationProvider', '$urlRouterProvider',  '$stateProvider', function($locationProvider, $urlRouterProvider, $stateProvider){
+    //use HTML5 History to remove the # in URLs
+    $locationProvider.html5Mode(true);
 
+    //account for invalid routes--send to home
+    $urlRouterProvider.otherwise('/');
+
+    //establish an array of states
+    var states = [
+      {
+        name: 'test',
+        url:'/test',
+        template: '<h1>Hi!</h1>'
+      },
+    ];
+
+    //regsiter the states with the state provider
+    states.forEach(function(state){
+      $stateProvider.state(state);
+    });
+  }]);
+  */
+
+///*
   .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider){
     //use HTML5 History to remove the # in URLs
     $locationProvider.html5Mode(true);
@@ -34,3 +58,4 @@ angular
     });
 
   }]);
+//*/
