@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en-us">
+<html ng-app="burgerBrowser" lang="en-us">
 
 <head>
   <title>Burger Browser</title>
@@ -26,8 +26,8 @@
 
   <!-- Angular JS -->
   <script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-beta.3/angular-ui-router.js"></script>
   <script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
-  <script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
   <script src="https://code.angularjs.org/1.5.8/angular-resource.js"></script>
   <script src="./lib/ui-bootstrap-collapse-2.1.3.js"></script>
   <script src="./app.js"></script>
@@ -37,7 +37,6 @@
   <script src="./common/userlocation.service.js"></script>
   <script src="./common/yelp.service.js"></script>
   <script src="./common/telephone.filter.js"></script>
-  <script src="./common/pageNotFound.component.js"></script>
   <script src="./auth/login.component.js"></script>
   <script src="./auth/register.component.js"></script>
   <script src="./auth/authentication.service.js"></script>
@@ -46,7 +45,9 @@
 
 <body>
 
-  <div ng-cloak ng-view ng-app="burgerBrowser"></div>
+  <div ui-view="header"></div>
+  <div ui-view="content"></div>
+  <div ui-view="footer"></div>
 
 </body>
 

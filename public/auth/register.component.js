@@ -1,11 +1,6 @@
 angular
-  .module('register', [
-    'header',
-    'footer',
-    'Authentication'
-  ])
-
-.component('appRegister', {
+.module('burgerBrowser')
+.component('register', {
   templateUrl: './auth/register.template.html',
   controller: ['$location', 'Authentication', function RegisterController($location, Authentication) {
     var self = this;

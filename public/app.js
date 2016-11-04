@@ -1,61 +1,45 @@
 angular
-  .module('burgerBrowser', [
-    'ngRoute',
-    'home',
-    'register',
-    'login',
-    'pageNotFound'
-  ])
-/*
-  .config(['$locationProvider', '$urlRouterProvider',  '$stateProvider', function($locationProvider, $urlRouterProvider, $stateProvider){
-    //use HTML5 History to remove the # in URLs
-    $locationProvider.html5Mode(true);
+.module('burgerBrowser', [
+  'ui.router',
+  'ui.bootstrap',
+  'UserLocation',
+  'Authentication',
+  'Yelp'
+])
+.config(['$locationProvider', '$urlRouterProvider',  '$stateProvider', function($locationProvider, $urlRouterProvider, $stateProvider){
+  //use HTML5 History to remove the # in URLs
+  $locationProvider.html5Mode(true);
 
-    //account for invalid routes--send to home
-    $urlRouterProvider.otherwise('/');
+  //account for invalid routes--send to home
+  $urlRouterProvider.otherwise('/');
 
-    //establish an array of states
-    var states = [
-      {
-        name: 'test',
-        url:'/test',
-        template: '<h1>Hi!</h1>'
-      },
-    ];
-
-    //regsiter the states with the state provider
-    states.forEach(function(state){
-      $stateProvider.state(state);
-    });
-  }]);
-  */
-
-///*
-  .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider){
-    //use HTML5 History to remove the # in URLs
-    $locationProvider.html5Mode(true);
-
-    //setup URL routes
-    $routeProvider.when('/', {
-      template: '<app-home></app-home>'
+  //establish states
+  $stateProvider
+    //define structure of views for the page
+    .state('main', {
+      views: {
+        header: 'mainHeader',
+        content: {
+          template: '<div ui-view></div>'
+        },
+        footer: 'mainFooter'
+      }
     })
 
-    //deal with funky Facebook redirect URL addition _=_
-    .when('/_=_', {
-      redirectTo: '/'
+    //define content view states
+    .state('main.home', {
+      url: '/',
+      component: 'home'
     })
 
-    .when('/register', {
-      template: '<app-register></app-register>'
+    .state('main.register', {
+      url: '/register',
+      component: 'register'
     })
 
-    .when('/login', {
-      template: '<app-login></app-login>'
-    })
-
-    .otherwise({
-      template: '<app-page-not-found></app-page-not-found>'
+    .state('main.login', {
+      url: '/login',
+      component: 'login'
     });
 
-  }]);
-//*/
+}]);

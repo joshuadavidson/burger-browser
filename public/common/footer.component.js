@@ -1,6 +1,6 @@
 angular
-  .module('footer', [])
-  .component('appFooter', {
+  .module('burgerBrowser')
+  .component('mainFooter', {
     templateUrl: './common/footer.template.html',
-    controller: [function FooterController(){}]
+    controller: [function FooterController() {}]
   });

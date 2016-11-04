@@ -16,9 +16,9 @@
       <div class="collapse navbar-collapse" uib-collapse="$ctrl.isCollapsed">
         <ul class="nav navbar-nav navbar-right">
 
-          <li ng-hide="$ctrl.user"><a href="/register">Register <i class="fa fa-pencil fa-lg"></i></a></li>
+          <li ng-hide="$ctrl.user"><a ui-sref="main.register">Register <i class="fa fa-pencil fa-lg"></i></a></li>
 
-          <li ng-hide="$ctrl.user"><a href="/login">Login <i class="fa fa-sign-in fa-lg"></i></a></li>
+          <li ng-hide="$ctrl.user"><a ui-sref="main.login">Login <i class="fa fa-sign-in fa-lg"></i></a></li>
 
           <li ng-show="$ctrl.user" class="navbar-text" >Welcome {{$ctrl.user.name}}!</li>
 

@@ -1,11 +1,6 @@
 angular
-  .module('login', [
-    'header',
-    'footer',
-    'Authentication'
-  ])
-
-.component('appLogin', {
+.module('burgerBrowser')
+.component('login', {
   templateUrl: './auth/login.template.html',
   controller: ['$http', '$location', 'Authentication', function LoginController($http, $location, Authentication) {
     var self = this;

@@ -1,12 +1,7 @@
 angular
-  .module('home', [
-    'header',
-    'footer',
-    'UserLocation',
-    'Yelp'
-  ])
+.module('burgerBrowser')
 
-.component('appHome', {
+.component('home', {
   templateUrl: './common/home.template.html',
   controller: ['$scope', 'UserLocation', 'Yelp', function HomeController($scope, UserLocation, Yelp) {
     var self = this;
@@ -53,7 +48,6 @@ angular
           style.background = "url('/img/yelpstars.png') 0px -576px";
           break;
       }
-
       return style;
     };
 
