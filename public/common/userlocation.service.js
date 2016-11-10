@@ -1,12 +1,12 @@
 angular
-  .module('UserLocation', [
+  .module('userLocation', [
 
   ])
 
-.factory('UserLocation', ['$window', '$http', function($window, $http) {
-  var UserLocation = {};
+.factory('userLocation', ['$window', '$http', function($window, $http) {
+  var userLocation = {};
 
-  UserLocation.getCoords = function() {
+  userLocation.getCoords = function() {
 
     return new Promise(function(resolve, reject) {
       //get user's coords from browser if available
@@ -39,7 +39,7 @@ angular
     });
   };
 
-  UserLocation.parseAddress = function(geocodeData) {
+  userLocation.parseAddress = function(geocodeData) {
     var location = {};
     var addressData = geocodeData[1].data.results[0]; //location of address data within geocode object
 
@@ -89,7 +89,7 @@ angular
     return location;
   };
 
-  UserLocation.getGeoCodeData = function(coords) {
+  userLocation.getGeoCodeData = function(coords) {
     return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         latlng: coords.lat + ',' + coords.lon,
@@ -98,7 +98,7 @@ angular
     });
   };
 
-  UserLocation.getLocation = function() {
+  userLocation.getLocation = function() {
     var self = this;
 
     return new Promise(function(resolve, reject) {
@@ -119,5 +119,5 @@ angular
     });
   };
 
-  return UserLocation;
+  return userLocation;
 }]);

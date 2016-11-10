@@ -1,4 +1,4 @@
-<header>
+<header currentUser="$ctrl.currentUser">
   <nav class="navbar navbar-inverse navbar-default navbar-static-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,7 +22,7 @@
 
           <li ng-show="$ctrl.user" class="navbar-text" >Welcome {{$ctrl.user.name}}!</li>
 
-          <li ng-show="$ctrl.user" ng-click="$ctrl.logout()"><a href="/login">Logout <i class="fa fa-sign-out fa-lg"></i></a></li>
+          <li ng-show="$ctrl.user" ng-click="$ctrl.onLogout()"><a href="/login">Logout <i class="fa fa-sign-out fa-lg"></i></a></li>
 
         </ul>
       </div>

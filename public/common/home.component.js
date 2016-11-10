@@ -3,7 +3,7 @@ angular
 
 .component('home', {
   templateUrl: './common/home.template.html',
-  controller: ['$scope', 'UserLocation', 'Yelp', function HomeController($scope, UserLocation, Yelp) {
+  controller: ['$scope', 'userLocation', 'yelp', function HomeController($scope, userLocation, yelp) {
     var self = this;
 
     self.inputLocation = 'Finding your location...';
@@ -51,11 +51,11 @@ angular
       return style;
     };
 
-    UserLocation.getLocation()
+    userLocation.getLocation()
       .then(function(location) {
         self.inputLocation = location.formattedAddress;
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to inputLocation
-        return Yelp.getBurgerJoints(location.lat, location.lon);
+        return yelp.getBurgerJoints(location.lat, location.lon);
       })
 
       .then(function(burgerJoints) {
@@ -88,5 +88,8 @@ angular
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to inputLocation
       });
 
-  }]
+  }],
+  bindings: {
+    user: '<'
+  }
 });

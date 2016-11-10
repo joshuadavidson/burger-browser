@@ -2,23 +2,22 @@ angular
   .module('burgerBrowser')
   .component('mainHeader', {
     templateUrl: './common/header.template.html',
-    controller: ['$location', 'Authentication', function HeaderController($location, Authentication) {
+    controller: ['$location', 'authService', '$scope', function HeaderController($location, authService, $scope) {
       var self = this;
 
       //isCollapsed toggles when the user selects a link from the navbar menu
       self.isCollapsed = true;
 
-      //check for logged in state
-      Authentication.getUser()
-        .then(function(response) {
-          self.user = response.data;
-        })
-        .catch(function(err) {
-          self.user = null;
-        });
+      console.log("user from scope:");
+      console.log(self.currentUser);
 
-      self.logout = function() {
-        Authentication.logout();
+      self.onLogout = function() {
+        authService.logout();
+        self.user = null;
       };
-    }]
+    }],
+    bindings: {
+      user: '<',
+      onLogout: '&'
+    }
   });

@@ -1,12 +1,12 @@
 angular
-  .module('Yelp', [
+  .module('yelp', [
 
   ])
 
-.factory('Yelp', ['$http', function($http) {
-  var Yelp = {};
+.factory('yelp', ['$http', function($http) {
+  var yelp = {};
 
-  Yelp.getBurgerJoints = function(lat, lon) {
+  yelp.getBurgerJoints = function(lat, lon) {
     var getBurgerJointsConfig = {
       method: 'GET',
       url: '/api/yelp/burgerjoints',
@@ -19,6 +19,6 @@ angular
     return $http(getBurgerJointsConfig);
   };
 
-  return Yelp;
+  return yelp;
 
 }]);

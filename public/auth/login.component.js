@@ -2,7 +2,7 @@ angular
 .module('burgerBrowser')
 .component('login', {
   templateUrl: './auth/login.template.html',
-  controller: ['$http', '$location', 'Authentication', function LoginController($http, $location, Authentication) {
+  controller: ['$http', '$location', 'authService', '$rootScope', function LoginController($http, $location, authService, $rootScope) {
     var self = this;
 
     //create an object to hold form data
@@ -42,7 +42,7 @@ angular
         console.log('made it to auth function');
         console.log('sending credentials:');
         console.log(self.credentials);
-        Authentication.login(self.credentials)
+        authService.login(self.credentials)
         .then(function(response) {
           console.log('made it to response');
           console.log(response);

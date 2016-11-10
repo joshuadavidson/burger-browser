@@ -2,11 +2,11 @@ angular
 .module('burgerBrowser', [
   'ui.router',
   'ui.bootstrap',
-  'UserLocation',
-  'Authentication',
-  'Yelp'
+  'userLocation',
+  'authentication',
+  'yelp'
 ])
-.config(['$locationProvider', '$urlRouterProvider',  '$stateProvider', function($locationProvider, $urlRouterProvider, $stateProvider){
+.config(['$locationProvider', '$urlRouterProvider',  '$stateProvider',  function($locationProvider, $urlRouterProvider, $stateProvider){
   //use HTML5 History to remove the # in URLs
   $locationProvider.html5Mode(true);
 
@@ -18,18 +18,25 @@ angular
     //define structure of views for the page
     .state('main', {
       views: {
-        header: 'mainHeader',
+        'header': {
+          component: 'mainHeader',
+        },
         content: {
           template: '<div ui-view></div>'
         },
         footer: 'mainFooter'
+      },
+      resolve: {
+        user: ['authentication', function(authentication) {
+          return authentication.getUser();
+        }]
       }
     })
 
     //define content view states
     .state('main.home', {
       url: '/',
-      component: 'home'
+      component: 'home',
     })
 
     .state('main.register', {
