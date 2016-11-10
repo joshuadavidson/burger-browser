@@ -14,7 +14,6 @@ var tokenRequestConfig = {
 };
 
 //***** YELP *****//
-//passthrough api endpoint that fetches data from Yelp
 router.get('/burgerjoints', function(req, res, next) {
   request(tokenRequestConfig)
 

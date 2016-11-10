@@ -45,7 +45,7 @@ angular
       //if both email and password are provided and valid
       if (self.credentials.email && self.credentials.password) {
         console.log('made it to auth function');
-        console.log('sending credentials:');
+        console.log('sending credentials:')
         console.log(self.credentials);
         Authentication.login(self.credentials)
         .then(function(response) {

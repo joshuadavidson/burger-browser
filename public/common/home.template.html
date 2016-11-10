@@ -35,25 +35,26 @@
         <div ng-repeat="business in $ctrl.burgerJoints">
           <div class="list-group-item clearfix">
             <div class="row">
-
               <div class="col-sm-3">
                 <a ng-href="{{business.url}}">
                   <img ng-src="{{business.image_url}}" class="img-responsive" alt="" />
                 </a>
               </div>
-
               <div class="col-sm-9 text-center">
                 <a class="plain-link" ng-href="{{business.url}}">
                   <h3>{{business.name}}</h3>
                 </a>
-                <a class="plain-link" ng-href="{{business.url}}">
-                  <span ng-style="$ctrl.getReviewStyle(business.rating)"></span>
-                  <img class="yelp-image" src="https://s3-media2.fl.yelpcdn.com/assets/srv0/developer_pages/95212dafe621/assets/img/yelp-2c.png" height="30px" alt="Yelp" />
-                </a><br> {{business.review_count}} Reviews
-                <p>
-                  Phone: {{business.phone | telephone}}<br> Distance: {{business.distance*0.000621371 | number: 1}} miles<br>
-                  <a ng-href="https://www.yelp.com/map/{{business.id}}">Map It!</a>
-                </p>
+
+                
+                  <a class="plain-link" ng-href="{{business.url}}">
+                    <span ng-style="$ctrl.getReviewStyle(business.rating)"></span>
+                    <img class="yelp-image" src="https://s3-media2.fl.yelpcdn.com/assets/srv0/developer_pages/95212dafe621/assets/img/yelp-2c.png" height="30px" alt="Yelp" />
+                  </a><br> {{business.review_count}} Reviews
+                  <p>
+                    Phone: {{business.phone | telephone}}<br> Distance: {{business.distance*0.000621371 | number: 1}} miles<br>
+                    <a ng-href="https://www.yelp.com/map/{{business.id}}">Map It!</a>
+                  </p>
+
               </div>
 
             </div>
