@@ -9,9 +9,7 @@
 
       <h4>Browse Burger Joints Near You</h4>
 
-      <p>
-        <h6><a href="/register">Register</a> to check in at your favorite burger joint.</h6>
-      </p>
+      <h6 ng-if="!$ctrl.user"><a href="/register">Register</a> or <a href="/login">Login</a> to check in at your favorite burger joint.</h6>
 
       <!-- Error display -->
       <p class="bg-danger" ng-show="$ctrl.locationError">
@@ -54,6 +52,11 @@
                   Phone: {{business.phone | telephone}}<br> Distance: {{business.distance*0.000621371 | number: 1}} miles<br>
                   <a ng-href="https://www.yelp.com/map/{{business.id}}">Map It!</a>
                 </p>
+
+                <button type="button" ng-click="$ctrl.going(business.id)">
+                  xxx People Going
+                </button>
+
               </div>
 
             </div>

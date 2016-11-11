@@ -7,7 +7,7 @@ function ensureAuthenticated(req, res, next) {
     return next(null);
   }
 
-  //request is not authenticated return 401
+  //request is not authenticated return 204 no content
   else {
     res.sendStatus(204);
   }

@@ -17,6 +17,11 @@ a.btn {
   border-radius: 0 !important;
 }
 
+/* Prevent flash of uncompiled content */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 /* Custom facebook button */
 .btn-facebook {
   color: rgb(255, 255, 255);

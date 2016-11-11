@@ -1,14 +1,14 @@
 angular
-  .module('home', [
-    'header',
-    'footer',
-    'UserLocation',
-    'Yelp'
-  ])
-
+.module('home', [
+  'header',
+  'footer',
+  'authService',
+  'userLocService',
+  'yelpService'
+])
 .component('appHome', {
   templateUrl: './common/home.template.html',
-  controller: ['$scope', 'UserLocation', 'Yelp', function HomeController($scope, UserLocation, Yelp) {
+  controller: ['$scope', 'authService', 'userLocService', 'yelpService', function HomeController($scope, authService, userLocService, yelpService) {
     var self = this;
 
     self.inputLocation = 'Finding your location...';
@@ -53,15 +53,27 @@ angular
           style.background = "url('/img/yelpstars.png') 0px -576px";
           break;
       }
-
       return style;
     };
 
-    UserLocation.getLocation()
+    self.going = function(businessID){
+
+    };
+
+    //check for logged in state
+    authService.getUser()
+      .then(function(response){
+        self.user = response.data;
+      })
+      .catch(function(err){
+        self.user = null;
+      });
+
+    userLocService.getLocation()
       .then(function(location) {
         self.inputLocation = location.formattedAddress;
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to inputLocation
-        return Yelp.getBurgerJoints(location.lat, location.lon);
+        return yelpService.getBurgerJoints(location.lat, location.lon);
       })
 
       .then(function(burgerJoints) {

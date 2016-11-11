@@ -2,12 +2,12 @@ angular
   .module('register', [
     'header',
     'footer',
-    'Authentication'
+    'authService'
   ])
 
 .component('appRegister', {
   templateUrl: './auth/register.template.html',
-  controller: ['$location', 'Authentication', function RegisterController($location, Authentication) {
+  controller: ['$location', 'authService', function RegisterController($location, authService) {
     var self = this;
 
     //variable to toggle email form
@@ -45,7 +45,7 @@ angular
 
       //if both email and password are provided and valid
       if (self.credentials.email && self.credentials.password) {
-        Authentication.register(self.credentials)
+        authService.register(self.credentials)
           //registration was successful
           .then(function(response) {
             console.log(response);

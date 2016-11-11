@@ -1,19 +1,19 @@
 angular
   .module('header', [
     'ui.bootstrap',
-    'Authentication'
+    'authService'
   ])
 
 .component('appHeader', {
   templateUrl: './common/header.template.html',
-  controller: ['$location', 'Authentication', function HeaderController($location, Authentication) {
+  controller: ['$location', 'authService', function HeaderController($location, authService) {
     var self = this;
 
     //isCollapsed toggles when the user selects a link from the navbar menu
     self.isCollapsed = true;
 
     //check for logged in state
-    Authentication.getUser()
+    authService.getUser()
     .then(function(response){
       self.user = response.data;
     })
@@ -22,7 +22,7 @@ angular
     });
 
     self.logout = function() {
-      Authentication.logout();
+      authService.logout();
     };
   }]
 });

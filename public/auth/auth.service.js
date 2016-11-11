@@ -1,35 +1,35 @@
 angular
-  .module('Authentication', [])
+  .module('authService', [])
 
-.factory('Authentication', ['$http', function($http) {
+.factory('authService', ['$http', function($http) {
 
-  var Authentication = {};
+  var authService = {};
 
   //delete the session from the server to logout user
-  Authentication.logout = function() {
+  authService.logout = function() {
     return $http.get('/api/logout');
   };
 
   //check if user is logged in
-  Authentication.isLoggedIn = function() {
+  authService.isLoggedIn = function() {
     return $http.get('/api/isloggedin');
   };
 
   //get the user's profile data
-  Authentication.getUser = function() {
+  authService.getUser = function() {
     return $http.get('/api/profile');
   };
 
   //register a new local user
-  Authentication.register = function(credentials) {
+  authService.register = function(credentials) {
     return $http.post('/api/register', credentials);
   };
 
   //log in an existing local user
-  Authentication.login = function(credentials) {
+  authService.login = function(credentials) {
     return $http.post('/api/login', credentials);
   };
 
-  return Authentication;
+  return authService;
 
 }]);

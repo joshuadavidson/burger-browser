@@ -1,9 +1,6 @@
 angular
-  .module('Yelp', [
-
-  ])
-
-.factory('Yelp', ['$http', function($http) {
+.module('yelpService', [])
+.factory('yelpService', ['$http', function($http) {
   var Yelp = {};
 
   Yelp.getBurgerJoints = function(lat, lon) {
