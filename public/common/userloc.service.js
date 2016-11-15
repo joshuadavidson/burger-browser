@@ -1,7 +1,5 @@
 angular
-  .module('userLocService', [
-
-  ])
+  .module('userLocService', [])
 
 .factory('userLocService', ['$window', '$http', function($window, $http) {
   var userLocService = {};
@@ -32,7 +30,7 @@ angular
             });
           })
           .catch(function(error) {
-            error.occuredAt = "getIP"
+            error.occuredAt = "getIP";
             reject(error);
           });
       }

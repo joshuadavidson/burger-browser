@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
 const Business = require('../models/business.model');
 
 //check if request is authenticated
@@ -32,6 +30,7 @@ router.get('', ensureAuthenticated, function(req, res, next) {
   });
 });
 
+//add an attendee to a business
 router.put('', ensureAuthenticated, function(req, res, next) {
   var businessID = req.body.businessID;
   var userID = req.body.userID;
@@ -73,10 +72,11 @@ router.put('', ensureAuthenticated, function(req, res, next) {
   });
 });
 
+//remove an attendee from a business
 router.delete('', ensureAuthenticated, function(req, res, next) {
   var businessID = req.body.businessID;
   var userID = req.body.userID;
-  
+
   Business.findOne({
     businessID: businessID
   })

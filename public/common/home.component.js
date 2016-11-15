@@ -4,11 +4,12 @@ angular
   'footer',
   'authService',
   'userLocService',
-  'yelpService'
+  'yelpService',
+  'businessService'
 ])
 .component('appHome', {
   templateUrl: './common/home.template.html',
-  controller: ['$scope', 'authService', 'userLocService', 'yelpService', function HomeController($scope, authService, userLocService, yelpService) {
+  controller: ['$scope', 'authService', 'userLocService', 'yelpService', 'businessService', function HomeController($scope, authService, userLocService, yelpService, businessService) {
     var self = this;
 
     self.inputLocation = 'Finding your location...';
@@ -56,30 +57,61 @@ angular
       return style;
     };
 
-    self.going = function(businessID){
+    //logged in user can mark that they are attending
+    self.addAttendee = function(businessID, burgerJointIndex){
+      //toggle the button
+      self.burgerJoints[burgerJointIndex].userAttending = true;
+      //update the attendee data
+      businessService.addAttendee(businessID, self.user._id)
+      .then(function(business){
+        self.burgerJoints[burgerJointIndex].attendees = business.attendees;
+        $scope.$apply(); //trigger digest cycle to catch the asynchronous change to burgerJoints
+      })
 
+      .catch(function(error){
+        console.log(error);
+      });
+    };
+
+    self.removeAttendee = function(businessID, burgerJointIndex){
+      //toggle the button
+      self.burgerJoints[burgerJointIndex].userAttending = false;
+      //update the attendee data
+      businessService.removeAttendee(businessID, self.user._id)
+      .then(function(business){
+        self.burgerJoints[burgerJointIndex].attendees = business.attendees;
+        $scope.$apply(); //trigger digest cycle to catch the asynchronous change to burgerJoints
+      })
+
+      .catch(function(error){
+        console.log(error);
+      });
     };
 
     //check for logged in state
     authService.getUser()
       .then(function(response){
         self.user = response.data;
+        console.log("Current User:");
+        console.log(self.user);
       })
       .catch(function(err){
         self.user = null;
       });
 
     userLocService.getLocation()
+      //get user location
       .then(function(location) {
         self.inputLocation = location.formattedAddress;
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to inputLocation
         return yelpService.getBurgerJoints(location.lat, location.lon);
       })
 
+      //use the location get burger joints
       .then(function(burgerJoints) {
-        console.log(burgerJoints.data.businesses);
         self.burgerJoints = burgerJoints.data.businesses;
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to burgerJoints
+        return Promise.resolve();
       })
 
       .catch(function(error) {
