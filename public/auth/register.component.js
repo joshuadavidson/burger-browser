@@ -48,13 +48,11 @@ angular
         authService.register(self.credentials)
           //registration was successful
           .then(function(response) {
-            console.log(response);
             $location.path('/');
           })
 
         //registation encountered an error
         .catch(function(err) {
-          console.log(err);
           self.registerError = err.data.message;
         });
       }
