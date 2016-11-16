@@ -117,5 +117,33 @@ angular
     });
   };
 
+  userLocService.getLatLon = function(location) {
+    return new Promise(function(resolve, reject) {
+      $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          address: location,
+          key: 'AIzaSyBI_S0PtZF_qjsPhbqql5HlUoTj0pM5RYQ'
+        }
+      })
+
+      .then(function(geocodeData) {
+        //handle cases where user input didn't yield any results
+        if (geocodeData.data.status === 'ZERO_RESULTS') {
+          reject(new Error('No Results'));
+        } else {
+          var coords = {};
+          coords.lat = geocodeData.data.results[0].geometry.location.lat;
+          coords.lon = geocodeData.data.results[0].geometry.location.lng;
+          resolve(coords);
+        }
+      })
+
+      .catch(function(error) {
+        reject(error);
+      });
+    });
+
+  };
+
   return userLocService;
 }]);

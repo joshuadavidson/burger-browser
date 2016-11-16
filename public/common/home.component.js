@@ -12,24 +12,37 @@ angular
   controller: ['$scope', '$window', 'authService', 'userLocService', 'yelpService', 'businessService', function HomeController($scope, $window, authService, userLocService, yelpService, businessService) {
     var self = this;
 
-    //check for previous data
-    if ($window.sessionStorage.getItem('inputLocation') && $window.sessionStorage.getItem('burgerJoints')) {
-      self.inputLocation = $window.sessionStorage.getItem('inputLocation');
-      self.burgerJoints = JSON.parse($window.sessionStorage.getItem('burgerJoints'));
-    }
-    //no previous data--use defaults
-    else {
-      //default text box while loading data
-      self.inputLocation = 'Finding your location...';
-      //default list of burger joints while loading data
-      self.burgerJoints = null;
-
-      //get the data for the first time
-      getInitialLocation();
-    }
-
+    //custom search with user input
     self.customSearch = function() {
-      console.log("Custom search started with: " + self.inputLocation);
+      //clear data
+      self.locationError = null;
+      self.burgerJoints = null;
+      $window.sessionStorage.removeItem('burgerJoints');
+
+      //store the users input
+      $window.sessionStorage.setItem('inputLocation', self.inputLocation);
+
+      //use the location input to get lat lon
+      userLocService.getLatLon(self.inputLocation)
+
+      //use the lat lon to get burgerJoints
+      .then(function(coords){
+        return yelpService.getBurgerJoints(coords.lat, coords.lon);
+      })
+
+      .then(function(burgerJoints){
+        //store the burgerJoints data
+        self.burgerJoints = burgerJoints.data.businesses;
+        $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints.data.businesses));
+        $scope.$apply(); //trigger digest cycle to catch the asynchronous change to burgerJoints
+      })
+
+      .catch(function(error){
+        console.log("Custom search error:");
+        console.log(error.message);
+        self.locationError = 'Sorry location not found. Please enter address, neighborhood, city, state or zip.';
+        $scope.$apply(); //trigger digest cycle to catch the error
+      });
     };
 
     //style and sprite mapping for yelp reivew stars
@@ -107,20 +120,14 @@ angular
       });
     };
 
-    //check for logged in state
-    authService.getUser()
-      .then(function(response) {
-        self.user = response.data;
-        console.log("Current User:");
-        console.log(self.user);
-      })
-      .catch(function(err) {
-        self.user = null;
-      });
-
     //use location to get inital list of burger joints
-    function getInitialLocation() {
-      console.log("Get inital location called.");
+    self.locationSearch = function() {
+      //clear data
+      self.locationError = null;
+      self.inputLocation = 'Finding your location...';
+      self.burgerJoints = null;
+      $window.sessionStorage.clear();
+
       userLocService.getLocation()
         //get user location
         .then(function(location) {
@@ -137,7 +144,6 @@ angular
         self.burgerJoints = burgerJoints.data.businesses;
         $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints.data.businesses));
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to burgerJoints
-        return Promise.resolve();
       })
 
       .catch(function(error) {
@@ -163,6 +169,31 @@ angular
         self.inputLocation = 'Hamburg';
         $scope.$apply(); //trigger digest cycle to catch the asynchronous change to inputLocation
       });
+    };
+
+    //check for logged in state
+    authService.getUser()
+    .then(function(response) {
+      self.user = response.data;
+    })
+    .catch(function(err) {
+      self.user = null;
+    });
+
+    //check for previous data
+    if ($window.sessionStorage.getItem('inputLocation') && $window.sessionStorage.getItem('burgerJoints')) {
+      self.inputLocation = $window.sessionStorage.getItem('inputLocation');
+      self.burgerJoints = JSON.parse($window.sessionStorage.getItem('burgerJoints'));
+    }
+    //no previous data--use defaults
+    else {
+      //default text box while loading data
+      self.inputLocation = 'Finding your location...';
+      //default list of burger joints while loading data
+      self.burgerJoints = null;
+
+      //get the data for the first time
+      self.locationSearch();
     }
 
   }]

@@ -71,7 +71,7 @@ router.get('/burgerjoints', function(req, res, next) {
       //additionally append a key to denote user already attending if their ID is found in the attendee list
       else {
         parsedBurgerJoints.businesses[index].attendees = attendeeResults[index].attendees;
-        //check if use is logged in, update only if they are
+        //check if use is logged in, update if
         if (req.user) {
           parsedBurgerJoints.businesses[index].userAttending = parsedBurgerJoints.businesses[index].attendees.includes(req.user._id.toString());
         }
