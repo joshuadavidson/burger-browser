@@ -26,7 +26,7 @@ router.get('/burgerjoints', function(req, res, next) {
         categories: 'burgers',
         latitude: req.query.lat,
         longitude: req.query.lon,
-        sort_by: 'rating',
+        sort_by: 'distance',
         limit: 50
       },
       headers: {
