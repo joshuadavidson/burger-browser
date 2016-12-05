@@ -1,6 +1,4 @@
-import angular from 'angular';
-
-export default angular
+angular
   .module('pageNotFound', [
     'header',
     'footer',
@@ -14,4 +12,4 @@ export default angular
 
     }
   ]
-}).name;
+});

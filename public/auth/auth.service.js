@@ -1,6 +1,4 @@
-import angular from 'angular';
-
-export default angular
+angular
   .module('authService', [])
 
 .factory('authService', ['$http', function($http) {
@@ -34,4 +32,4 @@ export default angular
 
   return authService;
 
-}]).name;
+}]);

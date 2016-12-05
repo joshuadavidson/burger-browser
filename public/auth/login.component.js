@@ -1,6 +1,4 @@
-import angular from 'angular';
-
-export default angular
+angular
   .module('login', [
     'header',
     'footer',
@@ -57,4 +55,4 @@ export default angular
 
     };
   }]
-}).name;
+});

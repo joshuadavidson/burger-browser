@@ -1,6 +1,4 @@
-import angular from 'angular';
-
-export default angular
+angular
   .module('businessService', [
 
   ])
@@ -74,4 +72,4 @@ export default angular
   };
 
   return businessService;
-}]).name;
+}]);
