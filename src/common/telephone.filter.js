@@ -1,4 +1,6 @@
-angular.module('burgerBrowser').filter('telephone', function() {
+import angular from 'angular';
+
+export default angular.module('burgerBrowser').filter('telephone', function() {
   return function(telephoneNum) {
     //check for null value
     if (!telephoneNum) {
@@ -30,4 +32,4 @@ angular.module('burgerBrowser').filter('telephone', function() {
     }
 
   };
-});
+}).name;

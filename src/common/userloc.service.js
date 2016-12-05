@@ -1,4 +1,6 @@
-angular
+import angular from 'angular';
+
+export default angular
   .module('userLocService', [])
 
 .factory('userLocService', ['$window', '$http', function($window, $http) {
@@ -146,4 +148,4 @@ angular
   };
 
   return userLocService;
-}]);
+}]).name;

@@ -1,8 +1,13 @@
-angular
+import angular from 'angular';
+import header from '../common/header.component';
+import footer from '../common/footer.component';
+import authServiceMod from './auth.service';
+
+export default angular
   .module('register', [
-    'header',
-    'footer',
-    'authService'
+    header,
+    footer,
+    authServiceMod,
   ])
 
 .component('appRegister', {
@@ -59,4 +64,4 @@ angular
 
     };
   }]
-});
+}).name;

@@ -1,4 +1,6 @@
-angular
+import angular from 'angular';
+
+export default angular
 .module('yelpService', [])
 .factory('yelpService', ['$http', function($http) {
   var Yelp = {};
@@ -18,4 +20,4 @@ angular
 
   return Yelp;
 
-}]);
+}]).name;

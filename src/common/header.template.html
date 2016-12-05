@@ -13,7 +13,7 @@
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" uib-collapse="$ctrl.isCollapsed">
+      <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
         <ul class="nav navbar-nav navbar-right">
 
           <li ng-if="!$ctrl.user"><a href="/register">Register <i class="fa fa-pencil fa-lg"></i></a></li>
