@@ -2,7 +2,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const User = require('../app/models/user.model');
+const User = require('../models/user.model');
 
 module.exports = function(passport) {
 
