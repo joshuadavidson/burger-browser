@@ -1,42 +1,37 @@
 const express = require('express');
-const router = express.Router();
-const mongoose = require('mongoose');
 const passport = require('passport');
-const request = require('request');
-const User = require('../models/user.model');
 
-//***** FACEBOOK *****//
+const router = express.Router();
+
+// ***** FACEBOOK ***** //
 router.get('/facebook', passport.authenticate('facebook', {
-  scope: 'email'
+  scope: 'email',
 }));
 
 router.get('/facebook/callback',
   passport.authenticate('facebook', {
     successRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
+    failureRedirect: '/login',
+  }));
 
-//***** TWITTER *****//
+// ***** TWITTER ***** //
 router.get('/twitter', passport.authenticate('twitter'));
 
 router.get('/twitter/callback',
   passport.authenticate('twitter', {
     successRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
+    failureRedirect: '/login',
+  }));
 
-//***** GOOGLE *****//
+// ***** GOOGLE ***** //
 router.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
+  scope: ['profile', 'email'],
 }));
 
 router.get('/google/callback',
   passport.authenticate('google', {
     successRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
+    failureRedirect: '/login',
+  }));
 
 module.exports = router;

@@ -1,107 +1,117 @@
 const express = require('express');
-const router = express.Router();
 const Business = require('../models/business.model');
 
-//check if request is authenticated
+const router = express.Router();
+
+// check if request is authenticated
 function ensureAuthenticated(req, res, next) {
-  //request is authenticated go to next middleware
+  // request is authenticated go to next middleware
   if (req.isAuthenticated()) {
-    return next(null);
+    next(null);
   }
 
-  //request is not authenticated return 401
+  // request is not authenticated return 401
   else {
     res.sendStatus(401);
   }
 }
 
-router.get('', ensureAuthenticated, function(req, res, next) {
+router.get('', ensureAuthenticated, (req, res, next) => {
   Business.findOne({
-    businessID: req.query.businessID
+    businessID: req.query.businessID,
   })
 
-  .then(function(business){
-    res.status(200); //status OK
-    res.json(business);
+  .then((foundBusiness) => {
+    // status OK
+    res.status(200).json(foundBusiness);
   })
 
-  .catch(function(error){
-    next(err);
+  .catch((findError) => {
+    next(findError);
   });
 });
 
-//add an attendee to a business
-router.put('', ensureAuthenticated, function(req, res, next) {
-  var businessID = req.body.businessID;
-  var userID = req.body.userID;
+// add an attendee to a business
+router.put('', ensureAuthenticated, (req, res, next) => {
+  const businessID = req.body.businessID;
+  const userID = req.body.userID;
 
   Business.findOne({
-    businessID: businessID
+    businessID,
   })
 
-  .then(function(business){
-    //business already in db
-    if(business){
-      business.addAttendee(userID);
-      business.save().then(function(business){
-        res.status(200);
-        res.json(business); //return created business
+  .then((foundBusiness) => {
+    // business already in db
+    if (foundBusiness) {
+      foundBusiness.addAttendee(userID);
+      foundBusiness.save()
+      .then((savedBusiness) => {
+        // return created business
+        res.status(200).json(savedBusiness);
       })
-      .catch(function(error) {
-        next(error); //pass error to error handler
+      .catch((saveError) => {
+        // pass error to error handler
+        next(saveError);
       });
     }
 
-    //business not in db
+    // business not in db
     else {
-      var newBusiness = new Business();
+      const newBusiness = new Business();
       newBusiness.addAttendee(userID);
       newBusiness.businessID = businessID;
-      newBusiness.save().then(function(business){
-        res.status(201); //created
-        res.json(business); //return created business
+      newBusiness.save()
+      .then((savedBusiness) => {
+        // created
+        // return created business
+        res.status(201).json(savedBusiness);
       })
-      .catch(function(error) {
-        next(error); //pass error to error handler
+      .catch((saveError) => {
+        // pass error to error handler
+        next(saveError);
       });
     }
   })
 
-  .catch(function(error){
-    next(error); //pass error to error handler
+  .catch((findError) => {
+    // pass error to error handler
+    next(findError);
   });
 });
 
-//remove an attendee from a business
-router.delete('', ensureAuthenticated, function(req, res, next) {
-  var businessID = req.body.businessID;
-  var userID = req.body.userID;
+// remove an attendee from a business
+router.delete('', ensureAuthenticated, (req, res, next) => {
+  const businessID = req.body.businessID;
+  const userID = req.body.userID;
 
   Business.findOne({
-    businessID: businessID
+    businessID,
   })
 
-  .then(function(business){
-    //if business is found
-    if(business){
-      business.removeAttendee(userID);
-      business.save().then(function(business){
-        res.status(200);
-        res.json(business); //return updated business
+  .then((foundBusiness) => {
+    // if business is found
+    if (foundBusiness) {
+      foundBusiness.removeAttendee(userID);
+      foundBusiness.save()
+      .then((savedBusiness) => {
+        // return updated business
+        res.status(200).json(savedBusiness);
       })
-      .catch(function(error){
-        next(error); //pass error to error handler
+      .catch((saveError) => {
+        // pass error to error handler
+        next(saveError);
       });
     }
-    //business not found
+    // business not found
     else {
-      res.status(200);
-      res.json(business); //return created business
+      // return empty business
+      res.status(200).json(foundBusiness);
     }
   })
 
-  .catch(function(error){
-    next(error); //pass error to error handler
+  .catch((findError) => {
+    // pass error to error handler
+    next(findError);
   });
 });
 
