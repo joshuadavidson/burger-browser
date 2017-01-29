@@ -39,6 +39,7 @@
     "passport-twitter": "^1.0.4",
     "request": "^2.76.0",
     "request-ip": "^1.2.2",
-    "request-promise-native": "^1.0.3"
+    "request-promise-native": "^1.0.3",
+    "ui-bootstrap-collapse": "^2.2.1"
   }
 }
