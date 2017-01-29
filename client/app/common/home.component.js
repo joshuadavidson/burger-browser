@@ -8,7 +8,7 @@ angular
   'businessService'
 ])
 .component('appHome', {
-  templateUrl: './common/home.template.html',
+  templateUrl: './app/common/home.template.html',
   controller: ['$scope', '$window', 'authService', 'userLocService', 'yelpService', 'businessService', function HomeController($scope, $window, authService, userLocService, yelpService, businessService) {
     var self = this;
 

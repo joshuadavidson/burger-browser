@@ -6,7 +6,7 @@ angular
   ])
 
 .component('appRegister', {
-  templateUrl: './auth/register.template.html',
+  templateUrl: './app/auth/register.template.html',
   controller: ['$location', 'authService', function RegisterController($location, authService) {
     var self = this;
 

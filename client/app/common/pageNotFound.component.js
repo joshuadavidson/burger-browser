@@ -5,7 +5,7 @@ angular
   ])
 
 .component('appPageNotFound', {
-  templateUrl: './common/pageNotFound.template.html',
+  templateUrl: './app/common/pageNotFound.template.html',
   controller: [
     function PageNotFoundController() {
       var self = this;

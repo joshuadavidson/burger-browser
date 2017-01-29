@@ -6,7 +6,7 @@ angular
   ])
 
 .component('appLogin', {
-  templateUrl: './auth/login.template.html',
+  templateUrl: './app/auth/login.template.html',
   controller: ['$http', '$location', 'authService', function LoginController($http, $location, authService) {
     var self = this;
 
