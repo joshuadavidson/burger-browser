@@ -54,6 +54,7 @@ app.use(compression());
 
 // serve static files to the client
 app.use(express.static(path.join(__dirname, '../client')));
+app.use('/node_modules', express.static(path.join(__dirname, '../node_modules')));
 
 // parse all request bodies
 app.use(bodyParser.json());
