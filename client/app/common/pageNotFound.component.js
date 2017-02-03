@@ -1,3 +1,6 @@
+/* establish global variables for ESLint */
+/* global angular */
+
 angular
   .module('pageNotFound', [
     'header',
@@ -8,8 +11,6 @@ angular
   templateUrl: './app/common/pageNotFound.template.html',
   controller: [
     function PageNotFoundController() {
-      var self = this;
-
-    }
-  ]
+    },
+  ],
 });

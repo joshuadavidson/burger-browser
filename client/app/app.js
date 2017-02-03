@@ -1,36 +1,38 @@
+/* establish global variables for ESLint */
+/* global angular */
+
 angular
   .module('burgerBrowser', [
     'ngRoute',
     'home',
     'register',
     'login',
-    'pageNotFound'
+    'pageNotFound',
   ])
 
-  .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider){
-    //use HTML5 History to remove the # in URLs
+  .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+    // use HTML5 History to remove the # in URLs
     $locationProvider.html5Mode(true);
 
-    //setup URL routes
+    // setup URL routes
     $routeProvider.when('/', {
-      template: '<app-home></app-home>'
+      template: '<app-home></app-home>',
     })
 
-    //deal with funky Facebook redirect URL addition _=_
+    // deal with funky Facebook redirect URL addition _=_
     .when('/_=_', {
-      redirectTo: '/'
+      redirectTo: '/',
     })
 
     .when('/register', {
-      template: '<app-register></app-register>'
+      template: '<app-register></app-register>',
     })
 
     .when('/login', {
-      template: '<app-login></app-login>'
+      template: '<app-login></app-login>',
     })
 
     .otherwise({
-      template: '<app-page-not-found></app-page-not-found>'
+      template: '<app-page-not-found></app-page-not-found>',
     });
-
   }]);

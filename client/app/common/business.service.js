@@ -1,72 +1,73 @@
+/* establish global variables for ESLint */
+/* global angular */
+
 angular
-  .module('businessService', [
+.module('businessService', [])
 
-  ])
+.factory('businessService', ['$window', '$http', function ($window, $http) {
+  const businessService = {};
 
-.factory('businessService', ['$window', '$http', function($window, $http) {
-  var businessService = {};
-
-  businessService.getAttendees = function(businessID){
-    return new Promise(function(resolve, reject){
+  businessService.getAttendees = function (businessID) {
+    return new Promise((resolve, reject) => {
       $http({
         method: 'GET',
         url: '/api/business',
         params: {
-          businessID: businessID,
-        }
+          businessID,
+        },
       })
 
-      .then(function(response){
+      .then((response) => {
         resolve(response.data);
       })
 
-      .catch(function(error){
-        reject(error);
+      .catch((getAttendeesError) => {
+        reject(getAttendeesError);
       });
     });
   };
 
-  businessService.addAttendee = function(businessID, userID){
-    return new Promise(function(resolve, reject){
+  businessService.addAttendee = function (businessID, userID) {
+    return new Promise((resolve, reject) => {
       $http({
         method: 'PUT',
         url: '/api/business',
         data: {
-          businessID: businessID,
-          userID: userID
-        }
+          businessID,
+          userID,
+        },
       })
 
-      .then(function(response){
+      .then((response) => {
         resolve(response.data);
       })
 
-      .catch(function(error){
-        reject(error);
+      .catch((addAttendeeError) => {
+        reject(addAttendeeError);
       });
     });
   };
 
-  businessService.removeAttendee = function(businessID, userID){
-    return new Promise(function(resolve, reject){
+  businessService.removeAttendee = function (businessID, userID) {
+    return new Promise((resolve, reject) => {
       $http({
         method: 'DELETE',
         url: '/api/business',
         data: {
-          businessID: businessID,
-          userID: userID
+          businessID,
+          userID,
         },
         headers: {
-          "Content-Type": "application/json;charset=utf-8"
-        }
+          'Content-Type': 'application/json;charset=utf-8',
+        },
       })
 
-      .then(function(response){
+      .then((response) => {
         resolve(response.data);
       })
 
-      .catch(function(error){
-        reject(error);
+      .catch((removeAttendeeError) => {
+        reject(removeAttendeeError);
       });
     });
   };

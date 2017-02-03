@@ -1,33 +1,40 @@
-angular.module('burgerBrowser').filter('telephone', function() {
-  return function(telephoneNum) {
-    //check for null value
+/* establish global variables for ESLint */
+/* global angular */
+
+angular.module('burgerBrowser')
+
+.filter('telephone', () => {
+  const telephoneFilter = function (telephoneNum) {
+    // clean up the input to be only numbers
+    const numOnly = telephoneNum.replace(/\D/, '');
+    let number;
+    let countryCode;
+    let areaCode;
+
+    // check for null value
     if (!telephoneNum) {
       return '';
     }
 
-    //clean up the input to be only numbers
-    var numOnly = telephoneNum.replace(/\D/, '');
-    var countryCode;
-    var areaCode;
-    var subscriberNumber;
-
-    //single digit country code given for US numbers
+    // single digit country code given for US numbers
     if (numOnly.length === 11) {
-      //drop country code if it is 1
-      if (numOnly.slice(0,1)==='1'){
+      // drop country code if it is 1
+      if (numOnly.slice(0, 1) === '1') {
         countryCode = '';
-      } else {
+      }
+
+      else {
         countryCode = numOnly.slice(0, 1);
       }
-      areaCode = numOnly.slice(1, 4);
+
       number = numOnly.slice(4);
-      return countryCode + ' (' + areaCode + ') ' + number.slice(0, 3) + '-' + number.slice(3);
+      areaCode = numOnly.slice(1, 4);
+      return `${countryCode} (${areaCode}) ${number.slice(0, 3)}-${number.slice(3)}`;
     }
 
-    //return the number if it is international
-    else {
-      return telephoneNum;
-    }
-
+    // return the number if it is international
+    return telephoneNum;
   };
+
+  return telephoneFilter;
 });
