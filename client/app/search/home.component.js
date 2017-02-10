@@ -1,17 +1,10 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-.module('home', [
-  'header',
-  'footer',
-  'authService',
-  'userLocService',
-  'yelpService',
-  'businessService',
-])
-.component('appHome', {
-  templateUrl: './app/common/home.template.html',
+angular.module('burgerBrowser.home')
+
+.component('bbHome', {
+  templateUrl: './app/search/home.template.html',
   controller: ['$scope', '$window', 'authService', 'userLocService', 'yelpService', 'businessService', function HomeController($scope, $window, authService, userLocService, yelpService, businessService) {
     const self = this;
 

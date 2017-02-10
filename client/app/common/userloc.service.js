@@ -1,8 +1,7 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-.module('userLocService', [])
+angular.module('common.userLocation.service', [])
 
 .factory('userLocService', ['$window', '$http', function ($window, $http) {
   const userLocService = {};

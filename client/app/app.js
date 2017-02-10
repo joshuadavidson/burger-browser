@@ -3,11 +3,19 @@
 
 angular
   .module('burgerBrowser', [
+    // Angular Modules
     'ngRoute',
-    'home',
-    'register',
-    'login',
-    'pageNotFound',
+
+    // Feature Modules
+    'burgerBrowser.home',
+    'burgerBrowser.pageNotFound',
+
+    // Common Reusable Modules
+    'common.register.component',
+    'common.login.component',
+
+    // 3rd Party Modules
+    'ui.router',
   ])
 
   .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
@@ -16,7 +24,7 @@ angular
 
     // setup URL routes
     $routeProvider.when('/', {
-      template: '<app-home></app-home>',
+      template: '<bb-home></bb-home>',
     })
 
     // deal with funky Facebook redirect URL addition _=_
@@ -33,6 +41,6 @@ angular
     })
 
     .otherwise({
-      template: '<app-page-not-found></app-page-not-found>',
+      template: '<bb-page-not-found></bb-page-not-found>',
     });
   }]);

@@ -1,13 +1,9 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-  .module('header', [
-    'ui.bootstrap',
-  ])
-
-.component('appHeader', {
-  templateUrl: './app/common/header.template.html',
+angular.module('burgerBrowser.header')
+.component('bbHeader', {
+  templateUrl: './app/header/header.template.html',
   controller: ['$location', 'authService', function HeaderController() {
     const self = this;
     // isCollapsed toggles when the user selects a link from the navbar menu

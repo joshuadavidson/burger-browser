@@ -1,12 +1,7 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-  .module('register', [
-    'header',
-    'footer',
-    'authService',
-  ])
+angular.module('common.register.component')
 
 .component('appRegister', {
   templateUrl: './app/auth/register.template.html',

@@ -1,12 +1,7 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-  .module('login', [
-    'header',
-    'footer',
-    'authService',
-  ])
+angular.module('common.login.component')
 
 .component('appLogin', {
   templateUrl: './app/auth/login.template.html',

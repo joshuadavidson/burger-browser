@@ -2,8 +2,7 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-  .module('authService', [])
+angular.module('common.auth.service', [])
 
 .factory('authService', ['$http', function ($http) {
   const authService = {};

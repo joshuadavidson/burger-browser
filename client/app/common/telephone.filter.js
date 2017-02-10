@@ -1,7 +1,7 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('burgerBrowser')
+angular.module('common.telephone.filter', [])
 
 .filter('telephone', () => {
   const telephoneFilter = function (telephoneNum) {

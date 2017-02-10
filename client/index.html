@@ -26,33 +26,44 @@
   <link rel="stylesheet" href="./style.css" />
 
   <!-- Angular JS -->
-  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="../node_modules/angular/angular.js"></script>
   <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
   <script src="../node_modules/angular-route/angular-route.min.js"></script>
   <script src="../node_modules/angular-resource/angular-resource.min.js"></script>
 
   <!-- 3rd party Angular JS -->
   <script src="../node_modules/ui-bootstrap-collapse/ui-bootstrap-collapse-2.2.0.min.js"></script>
+  <script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 
   <!-- Local Angular JS -->
   <script src="./app/app.js"></script>
-  <script src="./app/common/header.component.js"></script>
-  <script src="./app/common/footer.component.js"></script>
-  <script src="./app/common/home.component.js"></script>
+  <script src="./app/footer/footer.module.js"></script>
+  <script src="./app/footer/footer.component.js"></script>
+  <script src="./app/header/header.module.js"></script>
+  <script src="./app/header/header.component.js"></script>
+  <script src="./app/page-not-found/page-not-found.module.js"></script>
+  <script src="./app/page-not-found/page-not-found.component.js"></script>
+  <script src="./app/search/home.module.js"></script>
+  <script src="./app/search/home.component.js"></script>
+  <script src="./app/results/yelp.service.js"></script>
+  <script src="./app/results/business.service.js"></script>
+
   <script src="./app/common/userloc.service.js"></script>
-  <script src="./app/common/yelp.service.js"></script>
-  <script src="./app/common/business.service.js"></script>
   <script src="./app/common/telephone.filter.js"></script>
-  <script src="./app/common/pageNotFound.component.js"></script>
-  <script src="./app/auth/login.component.js"></script>
-  <script src="./app/auth/register.component.js"></script>
-  <script src="./app/auth/auth.service.js"></script>
+  <script src="./app/common/auth.service.js"></script>
+
+  <script src="./app/common/login/login.module.js"></script>
+  <script src="./app/common/login/login.component.js"></script>
+  <script src="./app/common/register/register.module.js"></script>
+  <script src="./app/common/register/register.component.js"></script>
 
 </head>
 
 <body>
 
   <div ng-cloak ng-view ng-app="burgerBrowser"></div>
+
+  <!-- <div ng-cloak ui-view ng-app="burgerBrowser"></div> -->
 
 </body>
 
