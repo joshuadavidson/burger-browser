@@ -5,8 +5,11 @@ angular.module('burgerBrowser.home')
 
 .component('bbHome', {
   templateUrl: './app/search/home.template.html',
-  controller: ['$scope', '$window', 'authService', 'userLocService', 'yelpService', 'businessService', function HomeController($scope, $window, authService, userLocService, yelpService, businessService) {
+  controller: ['$scope', '$window', 'authService', 'userLocService', 'yelpService', 'businessService', 'userService', function HomeController($scope, $window, authService, userLocService, yelpService, businessService, userService) {
     const self = this;
+
+    // save the curent user from the user service
+    self.user = userService.currentUser;
 
     // custom search with user input
     self.customSearch = function () {
@@ -20,21 +23,18 @@ angular.module('burgerBrowser.home')
 
       // use the location input to get lat lon
       userLocService.getLatLon(self.inputLocation)
-
       // use the lat lon to get burgerJoints
       .then(coords => yelpService.getBurgerJoints(coords.lat, coords.lon))
 
       .then((burgerJoints) => {
         // store the burgerJoints data
-        self.burgerJoints = burgerJoints.data.businesses;
-        $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints.data.businesses));
+        self.burgerJoints = burgerJoints;
+        $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints));
         // trigger digest cycle to catch the asynchronous change to burgerJoints
         $scope.$apply();
-      })
+       })
 
       .catch((error) => {
-        console.log('Custom search error:');
-        console.log(error.message);
         self.locationError = 'Sorry location not found. Please enter address, neighborhood, city, state or zip.';
         // trigger digest cycle to catch the error
         $scope.$apply();
@@ -141,8 +141,8 @@ angular.module('burgerBrowser.home')
       // use the location get burger joints
       .then((burgerJoints) => {
         // store the burgerJoints data
-        self.burgerJoints = burgerJoints.data.businesses;
-        $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints.data.businesses));
+        self.burgerJoints = burgerJoints;
+        $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints));
         // trigger digest cycle to catch the asynchronous change to burgerJoints
         $scope.$apply();
       })
@@ -176,15 +176,6 @@ angular.module('burgerBrowser.home')
         $scope.$apply();
       });
     };
-
-    // check for logged in state
-    authService.getUser()
-    .then((response) => {
-      self.user = response.data;
-    })
-    .catch((getuserError) => {
-      self.user = null;
-    });
 
     // check for previous data
     if ($window.sessionStorage.getItem('inputLocation') && $window.sessionStorage.getItem('burgerJoints')) {

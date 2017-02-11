@@ -3,9 +3,12 @@
 
 angular.module('common.register.component')
 
-.component('appRegister', {
-  templateUrl: './app/auth/register.template.html',
-  controller: ['$location', 'authService', function RegisterController($location, authService) {
+.component('bbRegister', {
+  templateUrl: './app/common/register/register.template.html',
+  bindings: {
+    user: '<',
+  },
+  controller: ['$location', 'authService', 'userService', function RegisterController($location, authService, userService) {
     const self = this;
 
     // variable to toggle email form
@@ -47,7 +50,9 @@ angular.module('common.register.component')
       if (self.credentials.email && self.credentials.password) {
         authService.register(self.credentials)
           // registration was successful
-          .then((response) => {
+          .then((user) => {
+            // save the user data
+            userService.currentUser = user;
             // redirect to root path
             $location.path('/');
           })

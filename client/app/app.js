@@ -1,46 +1,67 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular
-  .module('burgerBrowser', [
-    // Angular Modules
-    'ngRoute',
+angular.module('burgerBrowser', [
+  // Feature Modules
+  'burgerBrowser.home',
+  'burgerBrowser.pageNotFound',
 
-    // Feature Modules
-    'burgerBrowser.home',
-    'burgerBrowser.pageNotFound',
+  // Common Reusable Modules
+  'common.register.component',
+  'common.login.component',
+  'common.user.service',
 
-    // Common Reusable Modules
-    'common.register.component',
-    'common.login.component',
+  // 3rd Party Modules
+  'ui.router',
+])
 
-    // 3rd Party Modules
-    'ui.router',
-  ])
+.config(configBlock)
+.run(runBlock);
 
-  .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
-    // use HTML5 History to remove the # in URLs
-    $locationProvider.html5Mode(true);
+// Inject dependencies into function
+configBlock.$inject = ['$locationProvider', '$stateProvider', '$urlServiceProvider'];
 
-    // setup URL routes
-    $routeProvider.when('/', {
-      template: '<bb-home></bb-home>',
-    })
+function configBlock($locationProvider, $stateProvider, $urlServiceProvider) {
+  // use HTML5 History to remove the # in URLs
+  $locationProvider.html5Mode(true);
 
-    // deal with funky Facebook redirect URL addition _=_
-    .when('/_=_', {
-      redirectTo: '/',
-    })
+  // Handle unkonwn routes by redirecting to home
+  $urlServiceProvider.rules.otherwise({ state: 'home' });
 
-    .when('/register', {
-      template: '<app-register></app-register>',
-    })
+  // Redirect for funky Facebook URL addition _=_
+  $urlServiceProvider.rules.when('/_=_', '/');
 
-    .when('/login', {
-      template: '<app-login></app-login>',
-    })
+  // setup URL routes
+  $stateProvider
+  .state('home', {
+    url: '/',
+    views: {
+      header: 'bbHeader',
+      content: 'bbHome',
+    },
+  })
 
-    .otherwise({
-      template: '<bb-page-not-found></bb-page-not-found>',
-    });
-  }]);
+  .state('login', {
+    url: '/login',
+    views: {
+      header: 'bbHeader',
+      content: 'bbLogin',
+    },
+  })
+
+  .state('register', {
+    url: '/register',
+    views: {
+      header: 'bbHeader',
+      content: 'bbRegister',
+    },
+  });
+}
+
+// Inject dependencies into function
+runBlock.$inject = ['authService'];
+
+function runBlock(authService) {
+  // check to see if user's session is still active on first load
+  authService.getUser();
+}

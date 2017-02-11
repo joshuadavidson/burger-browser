@@ -3,5 +3,4 @@
 
 angular.module('burgerBrowser.pageNotFound', [
   'burgerBrowser.header',
-  'burgerBrowser.footer',
 ]);

@@ -1,36 +1,60 @@
-
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('common.auth.service', [])
+angular.module('common.auth.service', [
+  'common.user.service',
+])
 
-.factory('authService', ['$http', function ($http) {
-  const authService = {};
+.factory('authService', authService);
 
+// inject dependencies
+authService.$inject = ['$http', 'userService'];
+
+function authService($http, userService) {
+  // API
+  const service = {
+    logout,
+    getUser,
+    register,
+    login,
+  };
+
+  return service;
+
+  // API implementation
   // delete the session from the server to logout user
-  authService.logout = function () {
-    return $http.get('/api/logout');
-  };
-
-  // check if user is logged in
-  authService.isLoggedIn = function () {
-    return $http.get('/api/isloggedin');
-  };
+  function logout() {
+    return $http.get('/api/logout')
+      .then(removeCurrentUser);
+  }
 
   // get the user's profile data
-  authService.getUser = function () {
-    return $http.get('/api/profile');
-  };
+  function getUser() {
+    return $http.get('/api/user')
+      .then(setCurrentUser);
+  }
 
   // register a new local user
-  authService.register = function (credentials) {
-    return $http.post('/api/register', credentials);
-  };
+  function register(credentials) {
+    return $http.post('/api/register', credentials)
+      .then(setCurrentUser);
+  }
 
   // log in an existing local user
-  authService.login = function (credentials) {
-    return $http.post('/api/login', credentials);
-  };
+  function login(credentials) {
+    return $http.post('/api/login', credentials)
+      .then(setCurrentUser);
+  }
 
-  return authService;
-}]);
+  // callback function to set current user in user Service
+  function setCurrentUser(response) {
+    if (response.status === 200) {
+      userService.setUser(response.data.user);
+    }
+  }
+
+  // callback function to remove current user in user Service
+  function removeCurrentUser() {
+    userService.removeUser();
+  }
+}

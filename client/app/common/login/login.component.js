@@ -3,9 +3,12 @@
 
 angular.module('common.login.component')
 
-.component('appLogin', {
-  templateUrl: './app/auth/login.template.html',
-  controller: ['$http', '$location', 'authService', function LoginController($http, $location, authService) {
+.component('bbLogin', {
+  templateUrl: './app/common/login/login.template.html',
+  bindings: {
+    user: '<',
+  },
+  controller: ['$http', '$state', 'authService', 'userService', function LoginController($http, $state, authService, userService) {
     const self = this;
 
     // create an object to hold form data
@@ -44,9 +47,9 @@ angular.module('common.login.component')
       // if both email and password are provided and valid
       if (self.credentials.email && self.credentials.password) {
         authService.login(self.credentials)
-        .then((response) => {
+        .then((user) => {
           // redirect to root path
-          $location.path('/');
+          $state.go('home');
         })
 
         .catch((err) => {

@@ -1,5 +1,3 @@
-<bb-header user="$ctrl.user"></bb-header>
-
 <div class="container-fluid">
   <div class="row">
 
@@ -9,7 +7,7 @@
 
       <h4>Browse Burger Joints Near You</h4>
 
-      <h6 ng-if="!$ctrl.user"><a href="/register">Register</a> or <a href="/login">Login</a> to check in at your favorite burger joint.</h6>
+      <h6 ng-if="!$ctrl.user.loggedIn"><a href="/register">Register</a> or <a href="/login">Login</a> to check in at your favorite burger joint.</h6>
 
       <!-- Error display -->
       <p class="bg-danger" ng-show="$ctrl.locationError">
@@ -58,7 +56,7 @@
                 </p>
 
                 <!-- Checkin Buttons -->
-                <div ng-if="$ctrl.user">
+                <div ng-if="$ctrl.user.loggedIn">
                   <button ng-if="!business.userAttending" ng-click="$ctrl.addAttendee(business.id, $index)"  class="btn-success" type="button">
                     I'm Going!
                   </button>
@@ -83,5 +81,3 @@
 
   </div>
 </div>
-
-<bb-footer></bb-footer>

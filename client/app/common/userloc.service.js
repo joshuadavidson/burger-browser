@@ -3,10 +3,54 @@
 
 angular.module('common.userLocation.service', [])
 
-.factory('userLocService', ['$window', '$http', function ($window, $http) {
-  const userLocService = {};
+.factory('userLocService', userLocService);
 
-  userLocService.getCoords = function () {
+// inject dependencies
+userLocService.$inject = ['$window', '$http'];
+
+function userLocService($window, $http) {
+  // Expose API
+  const service = {
+    getLatLon,
+    getLocation,
+  };
+
+  return service;
+
+  // API implementation
+  // function that takes a user input location and passes it through the google
+  // geocode API to get a latitude and longitude for use by caller
+  function getLatLon(location) {
+    return new Promise((resolve, reject) => {
+      $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        params: {
+          address: location,
+          key: 'AIzaSyBI_S0PtZF_qjsPhbqql5HlUoTj0pM5RYQ',
+        },
+      })
+
+      .then((geocodeData) => {
+        // handle cases where user input didn't yield any results
+        if (geocodeData.data.status === 'ZERO_RESULTS') {
+          reject(new Error('No Results'));
+        }
+
+        else {
+          const coords = {};
+          coords.lat = geocodeData.data.results[0].geometry.location.lat;
+          coords.lon = geocodeData.data.results[0].geometry.location.lng;
+          resolve(coords);
+        }
+      })
+
+      .catch((error) => {
+        console.log(`Custom search error: ${error.message}`);
+        reject(error);
+      });
+    });
+  }
+
+  function getCoords() {
     return new Promise((resolve, reject) => {
       // get user's coords from browser if available
       if ($window.navigator.geolocation) {
@@ -36,9 +80,9 @@ angular.module('common.userLocation.service', [])
           });
       }
     });
-  };
+  }
 
-  userLocService.parseAddress = function (geocodeData) {
+  function parseAddress(geocodeData) {
     const location = {};
     // location of address data within geocode object
     const addressData = geocodeData[1].data.results[0];
@@ -88,63 +132,30 @@ angular.module('common.userLocation.service', [])
 
     // return the assembled location object
     return location;
-  };
+  }
 
-  userLocService.getGeoCodeData = function (coords) {
+  function getGeoCodeData(coords) {
     return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
       params: {
         latlng: `${coords.lat},${coords.lon}`,
         key: 'AIzaSyBI_S0PtZF_qjsPhbqql5HlUoTj0pM5RYQ',
       },
     });
-  };
+  }
 
-  userLocService.getLocation = function () {
-    const self = this;
-
+  function getLocation() {
     return new Promise((resolve, reject) => {
-      self.getCoords()
+      getCoords()
 
-      .then(coords => Promise.all([coords, self.getGeoCodeData(coords)]))
+      .then(coords => Promise.all([coords, getGeoCodeData(coords)]))
 
       .then((geocodeData) => {
-        resolve(self.parseAddress(geocodeData));
+        resolve(parseAddress(geocodeData));
       })
 
       .catch((error) => {
         reject(error);
       });
     });
-  };
-
-  userLocService.getLatLon = function (location) {
-    return new Promise((resolve, reject) => {
-      $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
-        params: {
-          address: location,
-          key: 'AIzaSyBI_S0PtZF_qjsPhbqql5HlUoTj0pM5RYQ',
-        },
-      })
-
-      .then((geocodeData) => {
-        // handle cases where user input didn't yield any results
-        if (geocodeData.data.status === 'ZERO_RESULTS') {
-          reject(new Error('No Results'));
-        }
-
-        else {
-          const coords = {};
-          coords.lat = geocodeData.data.results[0].geometry.location.lat;
-          coords.lon = geocodeData.data.results[0].geometry.location.lng;
-          resolve(coords);
-        }
-      })
-
-      .catch((error) => {
-        reject(error);
-      });
-    });
-  };
-
-  return userLocService;
-}]);
+  }
+}

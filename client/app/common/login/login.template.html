@@ -1,9 +1,19 @@
-<bb-header></bb-header>
-
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-sm-4 col-sm-offset-4 text-center">
+    <!-- User already logged in -->
+    <div ng-show="$ctrl.user" class="col-sm-4 col-sm-offset-4 text-center">
+      <h1>Log In</h1>
+      <p class="bg-danger">
+        Looks like you are already logged in.
+      </p>
+      <p>
+        Search for burgers by heading <a href="/">home</a>.
+      </p>
+    </div>
+
+    <!-- User not logged in -->
+    <div ng-show="!$ctrl.user" class="col-sm-4 col-sm-offset-4 text-center">
       <h1>Log In</h1>
 
       <p>
@@ -74,5 +84,3 @@
 
   </div>
 </div>
-
-<bb-footer></bb-footer>

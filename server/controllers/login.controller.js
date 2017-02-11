@@ -29,7 +29,14 @@ router.post('', (req, res, next) => {
         }
         // successfully logged in
         res.status(info.status).json({
-          message: info.message,
+          user: {
+            _id: user._id,
+            createdAt: user.createdAt,
+            email: user.email,
+            name: user.name,
+            provider: user.provider,
+            updatedAt: user.updatedAt,
+          },
         });
       });
     }

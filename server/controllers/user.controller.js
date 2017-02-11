@@ -14,13 +14,17 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-// return the user's profile information
+// return the user's information
 router.get('', ensureAuthenticated, (req, res, next) => {
   res.json({
-    _id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-    provider: req.user.provider,
+    user: {
+      _id: req.user._id,
+      createdAt: req.user.createdAt,
+      email: req.user.email,
+      name: req.user.name,
+      provider: req.user.provider,
+      updatedAt: req.user.updatedAt,
+    }
   });
 });
 
