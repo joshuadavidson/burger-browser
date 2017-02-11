@@ -87,8 +87,6 @@ angular.module('burgerBrowser.home')
 
     // logged in user can mark that they are attending
     self.addAttendee = function (businessID, burgerJointIndex) {
-      // toggle the button
-      self.burgerJoints[burgerJointIndex].userAttending = true;
       // update the attendee data
       businessService.addAttendee(businessID, self.user._id)
         .then((business) => {
@@ -104,8 +102,6 @@ angular.module('burgerBrowser.home')
 
     // logged in user can mark that they are no longer attending
     self.removeAttendee = function (businessID, burgerJointIndex) {
-      // toggle the button
-      self.burgerJoints[burgerJointIndex].userAttending = false;
       // update the attendee data
       businessService.removeAttendee(businessID, self.user._id)
         .then((business) => {

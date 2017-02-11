@@ -57,11 +57,11 @@
 
                 <!-- Checkin Buttons -->
                 <div ng-if="$ctrl.user.loggedIn">
-                  <button ng-if="!business.userAttending" ng-click="$ctrl.addAttendee(business.id, $index)"  class="btn-success" type="button">
+                  <button ng-if="!business.attendees.includes($ctrl.user._id)" ng-click="$ctrl.addAttendee(business.id, $index)"  class="btn-success" type="button">
                     I'm Going!
                   </button>
 
-                  <button ng-if="business.userAttending" ng-click="$ctrl.removeAttendee(business.id, $index)" class="btn-danger" type="button">
+                  <button ng-if="business.attendees.includes($ctrl.user._id)" ng-click="$ctrl.removeAttendee(business.id, $index)" class="btn-danger" type="button">
                     I'm Not Going!
                   </button>
                 </div>
