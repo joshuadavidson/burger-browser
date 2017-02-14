@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-6 col-md-offset-3 text-center">
+
+      <h1>Burger Browser</h1>
+
+      <h4>Browse Burger Joints Near You</h4>
+
+      <h6 ng-if="!$ctrl.user.loggedIn"><a href="/register">Register</a> or <a href="/login">Login</a> to check in at your favorite burger joint.</h6>
+
+      <!-- Error display -->
+      <p class="bg-danger" ng-show="$ctrl.locationError">
+        {{$ctrl.locationError}}
+      </p>
+
+      <!-- Location Form -->
+      <form novalidate ng-submit="" class="css-form text-left">
+        <div class="form-group">
+          <input type="text" ng-model="$ctrl.inputLocation" class="form-control input-lg" required />
+        </div>
+        <div class="form-group text-center">
+          <button ng-click="$ctrl.customSearch()" onclick="this.blur();" class="btn btn-default">Find Burger Joints</button>
+          <button ng-click="$ctrl.locationSearch()" onclick="this.blur();" class="btn btn-default">Use my Location</button>
+        </div>
+      </form>
+
+
+      <!-- Loading text and spinner for loading results -->
+      <h4 ng-if="!$ctrl.burgerJoints && !$ctrl.locationError">Finding Burger Joints...</h4>
+      <img ng-if="!$ctrl.burgerJoints && !$ctrl.locationError" src="./img/ajax-loader.gif" alt="Loading..."/>
+
+      <!-- Search Results -->
+      <div class="list-group text-center">
+        <div ng-repeat="business in $ctrl.burgerJoints">
+          <div class="list-group-item clearfix">
+            <div class="row">
+
+              <div class="col-sm-3">
+                <a ng-href="{{business.url}}">
+                  <img ng-src="{{business.image_url}}" class="img-responsive" alt="" />
+                </a>
+              </div>
+
+              <div class="col-sm-9 text-center">
+                <a class="plain-link" ng-href="{{business.url}}">
+                  <h3>{{business.name}}</h3>
+                </a>
+                <a class="plain-link" ng-href="{{business.url}}">
+                  <span ng-style="$ctrl.getReviewStyle(business.rating)"></span>
+                  <img class="yelp-image" src="https://s3-media2.fl.yelpcdn.com/assets/srv0/developer_pages/95212dafe621/assets/img/yelp-2c.png" height="30px" alt="Yelp" />
+                </a><br> {{business.review_count}} Reviews
+                <p>
+                  Phone: {{business.phone | telephone}}<br> Distance: {{business.distance*0.000621371 | number: 1}} miles<br>
+                  <a ng-href="https://www.yelp.com/map/{{business.id}}" target="_blank">Map It!</a>
+                </p>
+
+                <!-- Checkin Buttons -->
+                <div ng-if="$ctrl.user.loggedIn">
+                  <button ng-if="!business.attendees.includes($ctrl.user._id)" ng-click="$ctrl.addAttendee(business.id, $index)"  class="btn-success" type="button">
+                    I'm Going!
+                  </button>
+
+                  <button ng-if="business.attendees.includes($ctrl.user._id)" ng-click="$ctrl.removeAttendee(business.id, $index)" class="btn-danger" type="button">
+                    I'm Not Going!
+                  </button>
+                </div>
+
+                <p>
+                  {{business.attendees.length}} Users Going
+                </p>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Burger Browser</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+
+  <!-- OG properties -->
+  <meta property="fb:app_id" content="1860917074137729" />
+  <meta property="og:url" content="https://burger-browser.herokuapp.com" />
+  <meta property="og:title" content="Burger Browser" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Browse Burger Joints Near You" />
+  <meta property="og:image" content="https://burger-browser.herokuapp.com/img/originalgrill.jpg" />
+
+  <!-- Utilities -->
+  <link rel="shortcut icon" href="https://jwaynedavidson.com/favicon.png">
+  <script src="./lib/gatracking.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Angular JS -->
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+  <script src="../node_modules/angular-route/angular-route.min.js"></script>
+  <script src="../node_modules/angular-resource/angular-resource.min.js"></script>
+
+  <!-- 3rd party Angular JS -->
+  <script src="../node_modules/ui-bootstrap-collapse/ui-bootstrap-collapse-2.2.0.min.js"></script>
+  <script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+  <!-- Local Angular JS -->
+  <script src="./app/app.js"></script>
+  <script src="./app/header/header.module.js"></script>
+  <script src="./app/header/header.component.js"></script>
+  <script src="./app/page-not-found/page-not-found.module.js"></script>
+  <script src="./app/page-not-found/page-not-found.component.js"></script>
+  <script src="./app/search/home.module.js"></script>
+  <script src="./app/search/home.component.js"></script>
+  <script src="./app/results/yelp.service.js"></script>
+  <script src="./app/results/business.service.js"></script>
+
+  <script src="./app/common/userloc.service.js"></script>
+  <script src="./app/common/telephone.filter.js"></script>
+  <script src="./app/common/auth.service.js"></script>
+  <script src="./app/common/user.service.js"></script>
+
+  <script src="./app/common/login/login.module.js"></script>
+  <script src="./app/common/login/login.component.js"></script>
+  <script src="./app/common/register/register.module.js"></script>
+  <script src="./app/common/register/register.component.js"></script>
+
+</head>
+
+<body ng-cloak ng-app="burgerBrowser">
+
+  <div ui-view="header"></div>
+  <div ui-view="content"></div>
+
+  <footer>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center">
+          <a href="https://jwaynedavidson.com"><img class="responsive" height="25" src="https://jwaynedavidson.com/img/jdwhite.svg" alt="JD Logo" /></a><br>
+          Coded by <a href="https://jwaynedavidson.com">Joshua Davidson</a><br>
+                    Search powered by <img class="responsive" src="https://s3-media2.fl.yelpcdn.com/assets/srv0/developer_pages/95212dafe621/assets/img/yelp-2c.png" height="30px" alt="Yelp" /><br>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+</body>
+
+</html>
