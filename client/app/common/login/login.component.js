@@ -1,15 +1,13 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('common.login.component')
-
-.component('bbLogin', {
+angular.module('common.login.component').component('bbLogin', {
   templateUrl: './app/common/login/login.template.html',
   bindings: {
     user: '<',
   },
   controller: ['$http', '$state', 'authService', 'userService', function LoginController($http, $state, authService, userService) {
-    const self = this;
+    var self = this;
 
     // create an object to hold form data
     self.credentials = {
@@ -46,13 +44,10 @@ angular.module('common.login.component')
 
       // if both email and password are provided and valid
       if (self.credentials.email && self.credentials.password) {
-        authService.login(self.credentials)
-        .then((user) => {
+        authService.login(self.credentials).then(function (user) {
           // redirect to root path
           $state.go('home');
-        })
-
-        .catch((err) => {
+        }).catch(function (err) {
           self.loginError = err.data.message;
         });
       }

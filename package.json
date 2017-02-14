@@ -44,10 +44,5 @@
     "request-promise-native": "^1.0.3",
     "ui-bootstrap-collapse": "^2.2.1"
   },
-  "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.22.0",
-    "webpack": "^1.14.0"
-  }
+  "devDependencies": {}
 }

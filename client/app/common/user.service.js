@@ -1,9 +1,7 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('common.user.service', [])
-
-.factory('userService', userService);
+angular.module('common.user.service', []).factory('userService', userService);
 
 // inject dependencies into function
 userService.$inject = [];
@@ -11,7 +9,7 @@ userService.$inject = [];
 function userService() {
   // API
   // storage object for current user details
-  const currentUser = {
+  var currentUser = {
     loggedIn: false,
     _id: null,
     name: null,
@@ -21,10 +19,10 @@ function userService() {
     updatedAt: null,
   };
 
-  const service = {
-    setUser,
-    removeUser,
-    currentUser,
+  var service = {
+    setUser: setUser,
+    removeUser: removeUser,
+    currentUser: currentUser,
   };
 
   return service;

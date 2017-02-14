@@ -2,21 +2,14 @@
 /* global angular */
 
 angular.module('burgerBrowser', [
-  // Feature Modules
-  'burgerBrowser.home',
-  'burgerBrowser.pageNotFound',
+// Feature Modules
+'burgerBrowser.home', 'burgerBrowser.pageNotFound',
 
-  // Common Reusable Modules
-  'common.register.component',
-  'common.login.component',
-  'common.user.service',
+// Common Reusable Modules
+'common.register.component', 'common.login.component', 'common.user.service',
 
-  // 3rd Party Modules
-  'ui.router',
-])
-
-.config(configBlock)
-.run(runBlock);
+// 3rd Party Modules
+'ui.router']).config(configBlock).run(runBlock);
 
 // Inject dependencies into function
 configBlock.$inject = ['$locationProvider', '$stateProvider', '$urlServiceProvider'];
@@ -32,29 +25,24 @@ function configBlock($locationProvider, $stateProvider, $urlServiceProvider) {
   $urlServiceProvider.rules.when('/_=_', '/');
 
   // setup URL routes
-  $stateProvider
-  .state('home', {
+  $stateProvider.state('home', {
     url: '/',
     views: {
       header: 'bbHeader',
       content: 'bbHome',
-    },
-  })
-
-  .state('login', {
+    }
+  }).state('login', {
     url: '/login',
     views: {
       header: 'bbHeader',
       content: 'bbLogin',
-    },
-  })
-
-  .state('register', {
+    }
+  }).state('register', {
     url: '/register',
     views: {
       header: 'bbHeader',
       content: 'bbRegister',
-    },
+    }
   });
 }
 

@@ -1,22 +1,18 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('common.auth.service', [
-  'common.user.service',
-])
-
-.factory('authService', authService);
+angular.module('common.auth.service', ['common.user.service']).factory('authService', authService);
 
 // inject dependencies
 authService.$inject = ['$http', 'userService'];
 
 function authService($http, userService) {
   // API
-  const service = {
-    logout,
-    getUser,
-    register,
-    login,
+  var service = {
+    logout: logout,
+    getUser: getUser,
+    register: register,
+    login: login,
   };
 
   return service;
@@ -24,26 +20,22 @@ function authService($http, userService) {
   // API implementation
   // delete the session from the server to logout user
   function logout() {
-    return $http.get('/api/logout')
-      .then(removeCurrentUser);
+    return $http.get('/api/logout').then(removeCurrentUser);
   }
 
   // get the user's profile data
   function getUser() {
-    return $http.get('/api/user')
-      .then(setCurrentUser);
+    return $http.get('/api/user').then(setCurrentUser);
   }
 
   // register a new local user
   function register(credentials) {
-    return $http.post('/api/register', credentials)
-      .then(setCurrentUser);
+    return $http.post('/api/register', credentials).then(setCurrentUser);
   }
 
   // log in an existing local user
   function login(credentials) {
-    return $http.post('/api/login', credentials)
-      .then(setCurrentUser);
+    return $http.post('/api/login', credentials).then(setCurrentUser);
   }
 
   // callback function to set current user in user Service

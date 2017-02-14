@@ -1,15 +1,13 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('common.register.component')
-
-.component('bbRegister', {
+angular.module('common.register.component').component('bbRegister', {
   templateUrl: './app/common/register/register.template.html',
   bindings: {
     user: '<',
   },
   controller: ['$location', 'authService', 'userService', function RegisterController($location, authService, userService) {
-    const self = this;
+    var self = this;
 
     // variable to toggle email form
     self.showEmailForm = false;
@@ -49,16 +47,16 @@ angular.module('common.register.component')
       // if both email and password are provided and valid
       if (self.credentials.email && self.credentials.password) {
         authService.register(self.credentials)
-          // registration was successful
-          .then((user) => {
-            // save the user data
-            userService.currentUser = user;
-            // redirect to root path
-            $location.path('/');
-          })
+        // registration was successful
+        .then(function (user) {
+          // save the user data
+          userService.currentUser = user;
+          // redirect to root path
+          $location.path('/');
+        })
 
         // registation encountered an error
-        .catch((registerError) => {
+        .catch(function (registerError) {
           self.registerError = registerError.data.message;
         });
       }

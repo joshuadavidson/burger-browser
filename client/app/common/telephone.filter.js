@@ -1,15 +1,13 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('common.telephone.filter', [])
-
-.filter('telephone', () => {
-  const telephoneFilter = function (telephoneNum) {
+angular.module('common.telephone.filter', []).filter('telephone', function () {
+  var telephoneFilter = function telephoneFilter(telephoneNum) {
     // clean up the input to be only numbers
-    const numOnly = telephoneNum.replace(/\D/, '');
-    let number;
-    let countryCode;
-    let areaCode;
+    var numOnly = telephoneNum.replace(/\D/, '');
+    var number = void 0;
+    var countryCode = void 0;
+    var areaCode = void 0;
 
     // check for null value
     if (!telephoneNum) {
@@ -21,15 +19,13 @@ angular.module('common.telephone.filter', [])
       // drop country code if it is 1
       if (numOnly.slice(0, 1) === '1') {
         countryCode = '';
-      }
-
-      else {
+      } else {
         countryCode = numOnly.slice(0, 1);
       }
 
       number = numOnly.slice(4);
       areaCode = numOnly.slice(1, 4);
-      return `${countryCode} (${areaCode}) ${number.slice(0, 3)}-${number.slice(3)}`;
+      return countryCode + ' (' + areaCode + ') ' + number.slice(0, 3) + '-' + number.slice(3);
     }
 
     // return the number if it is international

@@ -1,12 +1,10 @@
 /* establish global variables for ESLint */
 /* global angular */
 
-angular.module('burgerBrowser.home')
-
-.component('bbHome', {
+angular.module('burgerBrowser.home').component('bbHome', {
   templateUrl: './app/search/home.template.html',
   controller: ['$scope', '$window', 'authService', 'userLocService', 'yelpService', 'businessService', 'userService', function HomeController($scope, $window, authService, userLocService, yelpService, businessService, userService) {
-    const self = this;
+    var self = this;
 
     // save the curent user from the user service
     self.user = userService.currentUser;
@@ -24,17 +22,15 @@ angular.module('burgerBrowser.home')
       // use the location input to get lat lon
       userLocService.getLatLon(self.inputLocation)
       // use the lat lon to get burgerJoints
-      .then(coords => yelpService.getBurgerJoints(coords.lat, coords.lon))
-
-      .then((burgerJoints) => {
+      .then(function (coords) {
+        return yelpService.getBurgerJoints(coords.lat, coords.lon);
+      }).then(function (burgerJoints) {
         // store the burgerJoints data
         self.burgerJoints = burgerJoints;
         $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints));
         // trigger digest cycle to catch the asynchronous change to burgerJoints
         $scope.$apply();
-       })
-
-      .catch((error) => {
+      }).catch(function (error) {
         self.locationError = 'Sorry location not found. Please enter address, neighborhood, city, state or zip.';
         // trigger digest cycle to catch the error
         $scope.$apply();
@@ -43,10 +39,10 @@ angular.module('burgerBrowser.home')
 
     // style and sprite mapping for yelp reivew stars
     self.getReviewStyle = function (rating) {
-      const style = {
+      var style = {
         display: 'inline-block',
         width: '98px',
-        height: '18px',
+        height: '18px'
       };
 
       switch (rating) {
@@ -88,31 +84,25 @@ angular.module('burgerBrowser.home')
     // logged in user can mark that they are attending
     self.addAttendee = function (businessID, burgerJointIndex) {
       // update the attendee data
-      businessService.addAttendee(businessID, self.user._id)
-        .then((business) => {
-          self.burgerJoints[burgerJointIndex].attendees = business.attendees;
-          // trigger digest cycle to catch the asynchronous change to burgerJoints
-          $scope.$apply();
-        })
-
-        .catch((addAttendeeError) => {
-          console.log(addAttendeeError);
-        });
+      businessService.addAttendee(businessID, self.user._id).then(function (business) {
+        self.burgerJoints[burgerJointIndex].attendees = business.attendees;
+        // trigger digest cycle to catch the asynchronous change to burgerJoints
+        $scope.$apply();
+      }).catch(function (addAttendeeError) {
+        console.log(addAttendeeError);
+      });
     };
 
     // logged in user can mark that they are no longer attending
     self.removeAttendee = function (businessID, burgerJointIndex) {
       // update the attendee data
-      businessService.removeAttendee(businessID, self.user._id)
-        .then((business) => {
-          self.burgerJoints[burgerJointIndex].attendees = business.attendees;
-          // trigger digest cycle to catch the asynchronous change to burgerJoints
-          $scope.$apply();
-        })
-
-        .catch((removeAttendeeError) => {
-          console.log(removeAttendeeError);
-        });
+      businessService.removeAttendee(businessID, self.user._id).then(function (business) {
+        self.burgerJoints[burgerJointIndex].attendees = business.attendees;
+        // trigger digest cycle to catch the asynchronous change to burgerJoints
+        $scope.$apply();
+      }).catch(function (removeAttendeeError) {
+        console.log(removeAttendeeError);
+      });
     };
 
     // use location to get inital list of burger joints
@@ -124,47 +114,41 @@ angular.module('burgerBrowser.home')
       $window.sessionStorage.clear();
 
       userLocService.getLocation()
-        // get user location
-        .then((location) => {
-          // store the inputLocation data
-          self.inputLocation = location.formattedAddress;
-          $window.sessionStorage.setItem('inputLocation', location.formattedAddress);
-          // trigger digest cycle to catch the asynchronous change to inputLocation
-          $scope.$apply();
-          return yelpService.getBurgerJoints(location.lat, location.lon);
-        })
+      // get user location
+      .then(function (location) {
+        // store the inputLocation data
+        self.inputLocation = location.formattedAddress;
+        $window.sessionStorage.setItem('inputLocation', location.formattedAddress);
+        // trigger digest cycle to catch the asynchronous change to inputLocation
+        $scope.$apply();
+        return yelpService.getBurgerJoints(location.lat, location.lon);
+      })
 
       // use the location get burger joints
-      .then((burgerJoints) => {
+      .then(function (burgerJoints) {
         // store the burgerJoints data
         self.burgerJoints = burgerJoints;
         $window.sessionStorage.setItem('burgerJoints', JSON.stringify(burgerJoints));
         // trigger digest cycle to catch the asynchronous change to burgerJoints
         $scope.$apply();
-      })
-
-      .catch((getLocationError) => {
+      }).catch(function (getLocationError) {
         console.log(getLocationError);
 
         // check for geolocation errors
         if (getLocationError.occuredAt === 'getGeolocation' || getLocationError.occuredAt === 'getIP') {
           if (getLocationError.code === 1) {
             self.locationError = 'Enable location permissions to search by your location or type it in below.';
-          }
-
-          else if (getLocationError.code === 2) {
+          } else if (getLocationError.code === 2) {
             self.locationError = 'Location unavilable. Please type it in below.';
-          }
-
-          else {
+          } else {
             self.locationError = 'Unable to get your location. Please type it in below.';
           }
         }
 
         // handle all other errors
         else {
-          self.locationError = 'Please input your location below.';
-        }
+            self.locationError = 'Please input your location below.';
+          }
 
         // default ot Hamburg upon error
         self.inputLocation = 'Hamburg';
@@ -180,13 +164,13 @@ angular.module('burgerBrowser.home')
     }
     // no previous data--use defaults
     else {
-      // default text box while loading data
-      self.inputLocation = 'Finding your location...';
-      // default list of burger joints while loading data
-      self.burgerJoints = null;
+        // default text box while loading data
+        self.inputLocation = 'Finding your location...';
+        // default list of burger joints while loading data
+        self.burgerJoints = null;
 
-      // get the data for the first time
-      self.locationSearch();
-    }
-  }],
+        // get the data for the first time
+        self.locationSearch();
+      }
+  }]
 });
