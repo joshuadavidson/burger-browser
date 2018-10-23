@@ -15,7 +15,7 @@ module.exports = function passportStrategies(passport) {
     });
   });
 
-  // **** LOCAL REGSITER **** //
+  // **** LOCAL REGISTER **** //
   function localRegisterAuth(req, email, password, done) {
     // start by searching for user
     console.log('Searching for user');
